@@ -148,6 +148,12 @@
   }
 }
 
+@layer components {
+  .font-pretendard {
+    font-family: 'Pretendard', sans-serif;
+  }
+}
+
 body {
   @apply font-pretendard;
 }
