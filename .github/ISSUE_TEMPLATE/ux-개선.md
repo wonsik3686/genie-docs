@@ -1,32 +1,38 @@
 ---
 name: UX 개선
 about: UX Improvement
-title: "[UX Improvement]"
+title: '[UX Improvement]'
 labels: enhancement
 assignees: ''
-
 ---
 
 ---
+
 name: "UX 개선"
 about: "사용자 경험(UX) 개선 아이디어 제안"
 title: "[UX]"
 labels: ["enhancement", "ux"]
 assignees:
+
 ---
 
 ## 개선할 사용자 흐름 혹은 화면
+
 - 어떤 페이지나 기능의 사용자 경험을 개선해야 하는지 구체적으로 적어주세요.
 
 ## 현재 문제점
+
 - 기존 UX에서 불편한 점, 개선이 필요한 부분을 서술해 주세요.
 
 ## 개선 아이디어
+
 - 구체적으로 어떻게 UX를 개선하고 싶은지, 어떤 아이디어가 있는지 정리해 주세요.
 - 예: 버튼 위치 변경, 레이아웃 수정, 접근성(Accessibility) 보강 등
 
 ## 예상 효과
+
 - 개선 후 사용자 만족도, 편의성, 접근성 등이 어떻게 좋아질지 작성해 주세요.
 
 ## 추가 자료
+
 - 디자인 시안, 와이어프레임, 레퍼런스 링크 등이 있으면 함께 첨부해 주세요.
