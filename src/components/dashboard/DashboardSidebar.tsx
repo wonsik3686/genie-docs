@@ -84,7 +84,7 @@ export function DashboardSidebar() {
   }
 
   return (
-    <Sidebar className="mt-14 pr-0" variant="floating" collapsible="icon">
+    <Sidebar className="mt-16 pr-0" variant="floating" collapsible="icon">
       <Button
         onClick={handleToggleSidebar}
         onMouseEnter={handleMouseEnter}

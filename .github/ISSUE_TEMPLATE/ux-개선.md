@@ -6,15 +6,6 @@ labels: enhancement
 assignees: ''
 ---
 
----
-
-name: "UX 개선"
-about: "사용자 경험(UX) 개선 아이디어 제안"
-title: "[UX]"
-labels: ["enhancement", "ux"]
-assignees:
-
----
 
 ## 개선할 사용자 흐름 혹은 화면
 
