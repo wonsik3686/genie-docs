@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" suppressHydrationWarning>
-      <body className={`antialiased`}>
+      <body className={'antialiased'}>
         <QueryProvider>
           <ThemeProvider>
             <Header />

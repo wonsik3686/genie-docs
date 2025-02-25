@@ -119,17 +119,17 @@ export default {
           DEFAULT: 'hsl(var(--muted))',
           foreground: 'hsl(var(--muted-foreground))',
         },
-				brand: {
-          DEFAULT: '#0C426A',   // 주 컬러 (인디고)
-          light: '#3B6A8D',    // 약간 밝은 톤
-          dark: '#072D49',     // 더 짙은 톤
+        brand: {
+          DEFAULT: '#0C426A', // 주 컬러 (인디고)
+          light: '#3B6A8D', // 약간 밝은 톤
+          dark: '#072D49', // 더 짙은 톤
         },
         accent: {
           DEFAULT: 'hsl(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))',
-					point: '#3794C5',  // 살짝 더 청량한 파랑
-          light: '#5FB3D7',    // 밝은 하늘색
-          dark: '#2B749B',     // 짙은 느낌
+          point: '#3794C5', // 살짝 더 청량한 파랑
+          light: '#5FB3D7', // 밝은 하늘색
+          dark: '#2B749B', // 짙은 느낌
         },
         destructive: {
           DEFAULT: 'hsl(var(--destructive))',
