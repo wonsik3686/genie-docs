@@ -6,9 +6,17 @@ import { useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 function Header() {
   const { theme, setTheme } = useTheme();
+  const pathname = usePathname();
+  const menuItems = [
+    {
+      label: 'Dashboard',
+      href: '/dashboard',
+    },
+  ];
 
   useEffect(() => {
     if (theme === undefined) {
@@ -17,19 +25,26 @@ function Header() {
   }, [theme, setTheme]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center p-4 bg-background dark:bg-background">
+    <header className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between bg-background p-4 dark:bg-background">
       <div className="flex items-center space-x-4">
         <Button variant="ghost" asChild>
           <Link href="/">
-            <span className="text-xl font-bold text-brand-dark dark:text-brand-light font-mono">
+            <span className="font-mono text-xl font-bold text-brand-dark dark:text-brand-light">
               Genie Docs
             </span>
           </Link>
         </Button>
         <nav className="space-x-4">
-          <Button variant="ghost" asChild>
-            <Link href="/dashboard">Dashboard</Link>
-          </Button>
+          {menuItems.map((item) => (
+            <Button
+              className={`${pathname === item.href ? 'font-bold' : 'font-semibold text-gray-600 dark:text-gray-300'}`}
+              variant="ghost"
+              asChild
+              key={item.href}
+            >
+              <Link href={item.href}>{item.label}</Link>
+            </Button>
+          ))}
         </nav>
       </div>
       <div className="flex items-center space-x-4">
