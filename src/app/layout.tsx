@@ -1,3 +1,4 @@
+import Header from '@/components/layouts/Header';
 import { QueryProvider } from '@/components/providers/QueryProvider';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import type { Metadata } from 'next';
@@ -16,7 +17,10 @@ export default function RootLayout({
     <html lang="ko" suppressHydrationWarning>
       <body className={`antialiased`}>
         <QueryProvider>
-          <ThemeProvider>{children}</ThemeProvider>
+          <ThemeProvider>
+            <Header />
+            {children}
+          </ThemeProvider>
         </QueryProvider>
       </body>
     </html>

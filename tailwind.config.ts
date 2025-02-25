@@ -120,16 +120,16 @@ export default {
           foreground: 'hsl(var(--muted-foreground))',
         },
 				brand: {
-          DEFAULT: '#6E44FF', // 메인 브랜드 컬러(퍼플)
-          light: '#A28CFF',   // 밝은 톤 (옵션)
-          dark: '#4A2FCC',    // 어두운 톤 (옵션)
+          DEFAULT: '#0C426A',   // 주 컬러 (인디고)
+          light: '#3B6A8D',    // 약간 밝은 톤
+          dark: '#072D49',     // 더 짙은 톤
         },
         accent: {
           DEFAULT: 'hsl(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))',
-					emerald: '#10B981', // 민트/에메랄드 (버튼 호버 등)
-          lime: '#A3E635',    // 라임 (원한다면 추가 포인트)
-          pink: '#EC4899',    // 핑크/마젠타 (상황별로 사용)
+					point: '#3794C5',  // 살짝 더 청량한 파랑
+          light: '#5FB3D7',    // 밝은 하늘색
+          dark: '#2B749B',     // 짙은 느낌
         },
         destructive: {
           DEFAULT: 'hsl(var(--destructive))',
