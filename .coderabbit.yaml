@@ -10,17 +10,17 @@ reviews:
   profile: 'chill'
   poem: true
 
-# commands 섹션은 스키마에 따라 수정 필요
-# commands:
-#   pause: true # 리뷰 일시 중지 허용
-#   resume: true # 리뷰 재개 허용
-#   review: true # 증분 리뷰 활성화
-#   full_review: true # 전체 리뷰 활성화
-#   summary: true # 요약 생성 활성화
-#   generate_docstrings: true # 도크스트링 생성 활성화 (베타)
-#   resolve: true # 모든 CodeRabbit 리뷰 코멘트 해결 허용
-#   configuration: true # 현재 설정 표시
-#   help: true # 도움말 명령 활성화
+commands:
+  enable: # 명령어 활성화 설정
+    - pause
+    - resume
+    - review
+    - full_review
+    - summary
+    - generate_docstrings
+    - resolve
+    - configuration
+    - help
 
 ignore_keywords:
   - '@coderabbitai ignore' # 특정 PR이 리뷰되지 않도록 하는 키워드
@@ -32,4 +32,6 @@ title_keywords:
   - '@coderabbitai' # 제목을 자동으로 생성하는 키워드
 
 chat:
-  auto_reply: true
+  auto_reply: true # 자동 응답 활성화
+
+# 필요에 따라 추가 설정 옵션을 여기에 추가할 수 있습니다
