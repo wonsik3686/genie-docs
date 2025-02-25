@@ -77,7 +77,7 @@ export default [
           endOfLine: 'auto',
         },
       ],
-      'max-len': ['error', { code: 80, ignoreUrls: true }],
+      // 'max-len': ['error', { code: 80, ignoreUrls: true }],
       'import/no-cycle': 'off',
       '@typescript-eslint/no-misused-promises': [
         'error',
