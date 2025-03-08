@@ -37,7 +37,7 @@ export default [
       react: reactPlugin,
       import: importPlugin,
       'jsx-a11y': jsxA11yPlugin,
-      prettier: prettierPlugin,
+      prettier: prettierPlugin
     },
     rules: {
       ...typescriptEslintPlugin.configs['recommended'].rules,
@@ -80,6 +80,6 @@ export default [
         { checksVoidReturn: { attributes: false } },
       ],
       '@typescript-eslint/no-floating-promises': 'off',
-    },
-  },
+    }
+  }
 ];

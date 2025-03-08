@@ -5,3 +5,8 @@ coverage
 .github
 .eslintrc.js
 .prettierrc
+dist
+.next
+postcss.config.mjs
+eslint.config.mjs
+.prettierrc
