@@ -1,5 +1,5 @@
+// @ts-nocheck
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable import/no-anonymous-default-export */
 import typescriptEslintPlugin from '@typescript-eslint/eslint-plugin';
 import typescriptEslintParser from '@typescript-eslint/parser';
 import importPlugin from 'eslint-plugin-import';
@@ -20,8 +20,8 @@ export default [
       '**/build/**',
       '**/.next/**',
       '**/*.config.mjs',
-      'postcss.config.mjs'
-    ]
+      'postcss.config.mjs',
+    ],
   },
   {
     files: ['src/**/*.{ts,tsx}'],
@@ -30,7 +30,7 @@ export default [
       parserOptions: {
         project: './tsconfig.json',
         tsconfigRootDir: __dirname,
-      }
+      },
     },
     plugins: {
       '@typescript-eslint': typescriptEslintPlugin,
