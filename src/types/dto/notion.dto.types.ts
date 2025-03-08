@@ -1,6 +1,6 @@
 import { NotionPageHierarchy } from '../notion.types';
 
 export type NotionPagesResponse = {
-  pages: NotionPageHierarchy[];
+  pages: NotionPageHierarchy;
   list: { pageId: string; pageTitle: string }[];
 };

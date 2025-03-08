@@ -44,7 +44,7 @@ export const useSettingStore = create<SettingState & SettingActions>()(
       setNotionPageId: (notionPageId) => set({ notionPageId }),
     }),
     {
-      name: 'setting',
+      name: 'setting-store',
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
         notionPageId: state.notionPageId,

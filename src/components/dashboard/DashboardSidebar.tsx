@@ -3,8 +3,10 @@
 import {
   BookOpen,
   Brain,
+  ChevronDown,
   ChevronsLeftIcon,
   ChevronsRightIcon,
+  FileIcon,
   Settings,
 } from 'lucide-react';
 
@@ -17,19 +19,31 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
   SidebarSeparator,
   useSidebar,
 } from '@/components/ui/sidebar';
+import { useNotionPages } from '@/queries/notion.queries';
+import { useNotionStore } from '@/store/notionStore';
+import { useSettingStore } from '@/store/settingStore';
+import { NotionPageHierarchy } from '@/types/notion.types';
 import Link from 'next/link';
 import { useState } from 'react';
 import { Button } from '../ui/button';
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '../ui/collapsible';
 
 const documentsMenuItems = [
-  {
-    title: '노션 페이지 전체 보기',
-    url: '/dashboard/notion/pages',
-    icon: BookOpen,
-  },
+  // {
+  //   title: '노션 페이지 전체 보기',
+  //   url: '/dashboard/notion/pages',
+  //   icon: BookOpen,
+  // },
   {
     title: '노션 페이지',
     url: '/dashboard/notion',
@@ -62,6 +76,10 @@ export function DashboardSidebar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { setOpen } = useSidebar();
 
+  const notionPageId = useSettingStore((state) => state.notionPageId);
+  useNotionPages(notionPageId);
+  const notionPages = useNotionStore((state) => state.pages);
+
   function handleMouseEnter() {
     setOpen(true);
   }
@@ -83,6 +101,28 @@ export function DashboardSidebar() {
     }
   }
 
+  function renderNotionPages(pages: NotionPageHierarchy[]) {
+    return pages.map((page) => (
+      <SidebarMenuSub key={page.pageId}>
+        <SidebarMenuButton asChild>
+          <Link href={`/dashboard/notion/view?pageId=${page.pageId}`}>
+            <BookOpen />
+            <span>{page.pageTitle}</span>
+          </Link>
+        </SidebarMenuButton>
+        {page.children &&
+          page.children.length > 0 &&
+          page.children.map((child) => (
+            <CollapsibleContent key={child.pageId}>
+              <SidebarMenuSub>
+                {renderNotionPages(child.children)}
+              </SidebarMenuSub>
+            </CollapsibleContent>
+          ))}
+      </SidebarMenuSub>
+    ));
+  }
+
   return (
     <Sidebar className="mt-16 pr-0" variant="floating" collapsible="icon">
       <Button
@@ -102,16 +142,41 @@ export function DashboardSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {documentsMenuItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <Link href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              <Collapsible defaultOpen className="group/collapsible">
+                {documentsMenuItems.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <CollapsibleTrigger asChild>
+                      <SidebarMenuButton asChild>
+                        <Link href={item.url}>
+                          <FileIcon />
+                          <span>{item.title}</span>
+                          <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+                        </Link>
+                      </SidebarMenuButton>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                      <SidebarMenuSub>
+                        <Collapsible className="grouptwo/collapsible">
+                          <SidebarMenuSubItem>
+                            <CollapsibleTrigger asChild>
+                              <SidebarMenuSubButton>
+                                <FileIcon />
+                                <span>노션 페이지</span>
+                                <ChevronDown className="grouptwo-data-[state=open]/collapsible:rotate-180 ml-auto transition-transform" />
+                              </SidebarMenuSubButton>
+                            </CollapsibleTrigger>
+                            <CollapsibleContent>
+                              {notionPages.children &&
+                                notionPages.children.length > 0 &&
+                                renderNotionPages(notionPages.children)}
+                            </CollapsibleContent>
+                          </SidebarMenuSubItem>
+                        </Collapsible>
+                      </SidebarMenuSub>
+                    </CollapsibleContent>
+                  </SidebarMenuItem>
+                ))}
+              </Collapsible>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

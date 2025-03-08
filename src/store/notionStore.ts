@@ -3,24 +3,28 @@ import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
 export type notionState = {
-  pages: NotionPageHierarchy[];
+  pages: NotionPageHierarchy;
   notionPageList: NotionPage[];
   selectedPages: NotionPage[];
 };
 
 export type notionAction = {
-  setPages: (pages: NotionPageHierarchy[]) => void;
+  setPages: (pages: NotionPageHierarchy) => void;
   setNotionPageList: (notionPageList: NotionPage[]) => void;
   setSelectedPages: (selectedPages: NotionPage[]) => void;
 };
 
 const initialState: notionState = {
-  pages: [],
+  pages: {
+    pageId: '',
+    pageTitle: '',
+    children: [],
+  },
   notionPageList: [],
   selectedPages: [],
 };
 
-export const notionStore = create<notionState & notionAction>()(
+export const useNotionStore = create<notionState & notionAction>()(
   persist(
     (set) => ({
       ...initialState,
