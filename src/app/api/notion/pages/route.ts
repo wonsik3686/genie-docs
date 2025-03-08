@@ -9,12 +9,15 @@ import {
   GetPageResponse,
   ListBlockChildrenResponse,
 } from '@notionhq/client/build/src/api-endpoints';
+import { parse } from 'cookie';
 import { NextRequest, NextResponse } from 'next/server';
-
-export const notion = new Client({ auth: process.env.NOTION_API_KEY });
 
 export async function GET(req: NextRequest) {
   try {
+    const cookies = parse(req.headers.get('cookie') || '');
+    const notionApiKey = cookies.notionApiKey;
+    const notion = new Client({ auth: notionApiKey });
+
     const url = new URL(req.url);
     const { searchParams } = url;
     const parentPageId = searchParams.get('parentPageId');
@@ -47,7 +50,7 @@ export async function GET(req: NextRequest) {
     }
     pages.pageId = pageInfo.id;
     list.push({ pageTitle: pages.pageTitle, pageId: pages.pageId });
-    const children = await getChildPagesRecursive(parentPageId, list);
+    const children = await getChildPagesRecursive(parentPageId, list, notion);
     pages.children = children as unknown as never[];
 
     // console.log('API | api/notion/pages | pages: ', pages);
@@ -65,7 +68,11 @@ export async function GET(req: NextRequest) {
   }
 }
 
-async function getChildPagesRecursive(pageId: string, list: any[]) {
+async function getChildPagesRecursive(
+  pageId: string,
+  list: any[],
+  notion: Client
+) {
   const children: ListBlockChildrenResponse = await notion.blocks.children.list(
     {
       block_id: pageId,
@@ -74,7 +81,7 @@ async function getChildPagesRecursive(pageId: string, list: any[]) {
   const childPages: any[] = await Promise.all(
     children.results.map(async (child: any) => {
       if (child.hasOwnProperty('child_page')) {
-        const subPage = await getChildPagesRecursive(child.id, list);
+        const subPage = await getChildPagesRecursive(child.id, list, notion);
         list.push({
           pageTitle: child.child_page.title,
           pageId: child.id,

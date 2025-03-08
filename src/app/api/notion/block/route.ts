@@ -1,15 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Client } from '@notionhq/client';
 import { GetBlockResponse } from '@notionhq/client/build/src/api-endpoints';
+import { parse } from 'cookie';
 import { NextRequest, NextResponse } from 'next/server';
-
-const notion = new Client({ auth: process.env.NOTION_API_KEY });
 
 export async function GET(req: NextRequest) {
   try {
     const url = new URL(req.url);
     const { searchParams } = url;
     const blockId = searchParams.get('blockId');
+    const cookies = parse(req.headers.get('cookie') || '');
+    const notionApiKey = cookies.notionApiKey;
+    const notion = new Client({ auth: notionApiKey });
 
     if (!blockId) {
       return NextResponse.json(

@@ -1,13 +1,15 @@
 import { Client, isNotionClientError } from '@notionhq/client';
 import { ListBlockChildrenResponse } from '@notionhq/client/build/src/api-endpoints';
+import { parse } from 'cookie';
 import { NextRequest, NextResponse } from 'next/server';
-
-const notion = new Client({ auth: process.env.NOTION_API_KEY });
 
 export async function GET(req: NextRequest) {
   try {
     const url = new URL(req.url);
     const { searchParams } = url;
+    const cookies = parse(req.headers.get('cookie') || '');
+    const notionApiKey = cookies.notionApiKey;
+    const notion = new Client({ auth: notionApiKey });
 
     const pageId = searchParams.get('pageId');
 

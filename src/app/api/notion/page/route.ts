@@ -4,15 +4,17 @@ import {
   CreatePageResponse,
   GetPageResponse,
 } from '@notionhq/client/build/src/api-endpoints';
+import { parse } from 'cookie';
 import { NextRequest, NextResponse } from 'next/server';
-
-export const notion = new Client({ auth: process.env.NOTION_API_KEY });
 
 export async function GET(req: NextRequest) {
   try {
     const url = new URL(req.url);
     const { searchParams } = url;
     const pageId = searchParams.get('pageId');
+    const cookies = parse(req.headers.get('cookie') || '');
+    const notionApiKey = cookies.notionApiKey;
+    const notion = new Client({ auth: notionApiKey });
 
     if (!pageId) {
       return NextResponse.json(
@@ -41,6 +43,10 @@ export async function POST(req: NextRequest) {
   };
 
   try {
+    const cookies = parse(req.headers.get('cookie') || '');
+    const notionApiKey = cookies.notionApiKey;
+    const notion = new Client({ auth: notionApiKey });
+
     const response: CreatePageResponse = await notion.pages.create({
       parent: {
         type: 'page_id',
