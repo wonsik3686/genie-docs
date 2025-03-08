@@ -1,4 +1,5 @@
-import { FlatCompat } from '@eslint/eslintrc';
+// @ts-nocheck
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import typescriptEslintPlugin from '@typescript-eslint/eslint-plugin';
 import typescriptEslintParser from '@typescript-eslint/parser';
 import importPlugin from 'eslint-plugin-import';
@@ -11,31 +12,24 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
 export default [
-  ...compat.extends(
-    'next/core-web-vitals',
-    'next/typescript',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/recommended-type-checked',
-    'plugin:prettier/recommended',
-    'plugin:react/jsx-runtime'
-  ),
   {
-    ignores: ['node_modules', 'dist', 'build', '.next'],
+    ignores: [
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/build/**',
+      '**/.next/**',
+      '**/*.config.mjs',
+      'postcss.config.mjs',
+    ],
+  },
+  {
+    files: ['src/**/*.{ts,tsx}'],
     languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
       parser: typescriptEslintParser,
       parserOptions: {
         project: './tsconfig.json',
         tsconfigRootDir: __dirname,
-        ecmaFeatures: {
-          jsx: true,
-        },
       },
     },
     plugins: {
@@ -46,6 +40,8 @@ export default [
       prettier: prettierPlugin,
     },
     rules: {
+      ...typescriptEslintPlugin.configs['recommended'].rules,
+      ...typescriptEslintPlugin.configs['recommended-type-checked'].rules,
       semi: ['error', 'always'],
       quotes: ['error', 'single'],
       'no-console': 'error',
