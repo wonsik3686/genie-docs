@@ -5,6 +5,7 @@ import { useNotionStore } from '@/store/notionStore';
 import { NotionPagesResponse } from '@/types/dto/notion.dto.types';
 import {
   GetBlockResponse,
+  GetPageResponse,
   ListBlockChildrenResponse,
 } from '@notionhq/client/build/src/api-endpoints';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -35,7 +36,7 @@ export function useNotionPages(parentPageId: string) {
 
 // 노션 페이지 가져오기
 export function useNotionPage(pageId: string) {
-  return useQuery({
+  return useQuery<GetPageResponse, Error>({
     queryKey: ['notion', 'page', pageId],
     queryFn: async () => {
       const response = await fetch(`/api/notion/page?pageId=${pageId}`);

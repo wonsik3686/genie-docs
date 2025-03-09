@@ -105,7 +105,7 @@ export function DashboardSidebar() {
     return pages.map((page) => (
       <SidebarMenuSub key={page.pageId}>
         <SidebarMenuButton asChild>
-          <Link href={`/dashboard/notion/view?pageId=${page.pageId}`}>
+          <Link href={`/dashboard/notion/page?pageId=${page.pageId}`}>
             <BookOpen />
             <span>{page.pageTitle}</span>
           </Link>
