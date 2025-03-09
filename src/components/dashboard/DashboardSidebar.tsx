@@ -20,8 +20,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
   SidebarSeparator,
   useSidebar,
 } from '@/components/ui/sidebar';
@@ -106,7 +104,7 @@ export function DashboardSidebar() {
       <SidebarMenuSub key={page.pageId}>
         <SidebarMenuButton asChild>
           <Link href={`/dashboard/notion/page?pageId=${page.pageId}`}>
-            <BookOpen />
+            <FileIcon />
             <span>{page.pageTitle}</span>
           </Link>
         </SidebarMenuButton>
@@ -148,31 +146,16 @@ export function DashboardSidebar() {
                     <CollapsibleTrigger asChild>
                       <SidebarMenuButton asChild>
                         <Link href={item.url}>
-                          <FileIcon />
+                          <BookOpen />
                           <span>{item.title}</span>
                           <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
                         </Link>
                       </SidebarMenuButton>
                     </CollapsibleTrigger>
                     <CollapsibleContent>
-                      <SidebarMenuSub>
-                        <Collapsible className="grouptwo/collapsible">
-                          <SidebarMenuSubItem>
-                            <CollapsibleTrigger asChild>
-                              <SidebarMenuSubButton>
-                                <FileIcon />
-                                <span>노션 페이지</span>
-                                <ChevronDown className="grouptwo-data-[state=open]/collapsible:rotate-180 ml-auto transition-transform" />
-                              </SidebarMenuSubButton>
-                            </CollapsibleTrigger>
-                            <CollapsibleContent>
-                              {notionPages.children &&
-                                notionPages.children.length > 0 &&
-                                renderNotionPages(notionPages.children)}
-                            </CollapsibleContent>
-                          </SidebarMenuSubItem>
-                        </Collapsible>
-                      </SidebarMenuSub>
+                      {notionPages.children &&
+                        notionPages.children.length > 0 &&
+                        renderNotionPages(notionPages.children)}
                     </CollapsibleContent>
                   </SidebarMenuItem>
                 ))}
