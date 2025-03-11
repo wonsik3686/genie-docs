@@ -73,8 +73,9 @@ const NotionBlockRenderer = ({ block }: { block: BlockObjectResponse }) => {
               width={500}
               height={500}
               className="rounded-md"
+              unoptimized
             />
-            <p>{getMediaSourceText(block)}</p>
+            {/* <p>{getMediaSourceText(block)}</p> */}
           </div>
         );
       }
