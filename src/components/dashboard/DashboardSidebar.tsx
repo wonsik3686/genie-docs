@@ -20,6 +20,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
+  SidebarMenuSubItem,
   SidebarSeparator,
   useSidebar,
 } from '@/components/ui/sidebar';
@@ -35,6 +36,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '../ui/collapsible';
+import { ScrollArea } from '../ui/scroll-area';
 import {
   Tooltip,
   TooltipContent,
@@ -105,31 +107,56 @@ export function DashboardSidebar() {
     }
   }
 
+  function NotionPageChevron({ hasChildren }: { hasChildren: boolean }) {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleOpen = () => {
+      setIsOpen(!isOpen);
+    };
+
+    return (
+      <div onClick={toggleOpen} className="flex cursor-pointer items-center">
+        {hasChildren && (
+          <ChevronDown
+            className={`ml-auto h-4 w-4 transition-transform duration-300 ${
+              isOpen ? 'rotate-180' : ''
+            }`}
+          />
+        )}
+      </div>
+    );
+  }
+
   function renderNotionPages(pages: NotionPageHierarchy[]) {
     return pages.map((page) => (
       <SidebarMenuSub key={page.pageId}>
-        <Tooltip>
-          <TooltipTrigger>
-            <SidebarMenuButton asChild>
-              <Link href={`/dashboard/notion/page?pageId=${page.pageId}`}>
-                <FileIcon />
-                <span>{page.pageTitle}</span>
-              </Link>
-            </SidebarMenuButton>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>{page.pageTitle}</p>
-          </TooltipContent>
-        </Tooltip>
-        {page.children &&
-          page.children.length > 0 &&
-          page.children.map((child) => (
-            <CollapsibleContent key={child.pageId}>
-              <SidebarMenuSub>
-                {renderNotionPages(child.children)}
-              </SidebarMenuSub>
-            </CollapsibleContent>
-          ))}
+        <Collapsible key={page.pageId} defaultOpen>
+          <SidebarMenuSubItem>
+            <Tooltip>
+              <TooltipTrigger>
+                <CollapsibleTrigger asChild>
+                  <SidebarMenuButton asChild>
+                    <Link href={`/dashboard/notion/page?pageId=${page.pageId}`}>
+                      <FileIcon />
+                      <span className="w-full truncate">{page.pageTitle}</span>
+                      <NotionPageChevron
+                        hasChildren={page.children.length > 0}
+                      />
+                    </Link>
+                  </SidebarMenuButton>
+                </CollapsibleTrigger>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{page.pageTitle}</p>
+              </TooltipContent>
+            </Tooltip>
+            {page.children && page.children.length > 0 && (
+              <CollapsibleContent>
+                {page.children.map((child) => renderNotionPages([child]))}
+              </CollapsibleContent>
+            )}
+          </SidebarMenuSubItem>
+        </Collapsible>
       </SidebarMenuSub>
     ));
   }
@@ -150,69 +177,71 @@ export function DashboardSidebar() {
             <ChevronsRightIcon className="h-4 w-4" />
           )}
         </Button>
-        <SidebarContent>
-          <SidebarGroup>
-            <SidebarGroupLabel>문서</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                <Collapsible defaultOpen className="group/collapsible">
-                  {documentsMenuItems.map((item) => (
+        <ScrollArea className="rounded-md">
+          <SidebarContent>
+            <SidebarGroup>
+              <SidebarGroupLabel>문서</SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  <Collapsible defaultOpen className="group/collapsible">
+                    {documentsMenuItems.map((item) => (
+                      <SidebarMenuItem key={item.title}>
+                        <CollapsibleTrigger asChild>
+                          <SidebarMenuButton asChild>
+                            <Button variant="ghost">
+                              <BookOpen />
+                              <span>{item.title}</span>
+                              <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+                            </Button>
+                          </SidebarMenuButton>
+                        </CollapsibleTrigger>
+                        <CollapsibleContent>
+                          {notionPages.children &&
+                            notionPages.children.length > 0 &&
+                            renderNotionPages(notionPages.children)}
+                        </CollapsibleContent>
+                      </SidebarMenuItem>
+                    ))}
+                  </Collapsible>
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+            <SidebarGroup>
+              <SidebarGroupLabel>메뉴</SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {aiMenuItems.map((item) => (
                     <SidebarMenuItem key={item.title}>
-                      <CollapsibleTrigger asChild>
-                        <SidebarMenuButton asChild>
-                          <Button variant="ghost">
-                            <BookOpen />
-                            <span>{item.title}</span>
-                            <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
-                          </Button>
-                        </SidebarMenuButton>
-                      </CollapsibleTrigger>
-                      <CollapsibleContent>
-                        {notionPages.children &&
-                          notionPages.children.length > 0 &&
-                          renderNotionPages(notionPages.children)}
-                      </CollapsibleContent>
+                      <SidebarMenuButton asChild>
+                        <Link href={item.url}>
+                          <item.icon />
+                          <span>{item.title}</span>
+                        </Link>
+                      </SidebarMenuButton>
                     </SidebarMenuItem>
                   ))}
-                </Collapsible>
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-          <SidebarGroup>
-            <SidebarGroupLabel>메뉴</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {aiMenuItems.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
-                      <Link href={item.url}>
-                        <item.icon />
-                        <span>{item.title}</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-          <SidebarSeparator />
-          <SidebarGroup>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {etcMenuItems.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
-                      <Link href={item.url}>
-                        <item.icon />
-                        <span>{item.title}</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        </SidebarContent>
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+            <SidebarSeparator />
+            <SidebarGroup>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {etcMenuItems.map((item) => (
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarMenuButton asChild>
+                        <Link href={item.url}>
+                          <item.icon />
+                          <span>{item.title}</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          </SidebarContent>
+        </ScrollArea>
       </TooltipProvider>
     </Sidebar>
   );
