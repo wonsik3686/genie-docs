@@ -127,8 +127,8 @@ export function DashboardSidebar() {
     );
   }
 
-  function renderNotionPages(pages: NotionPageHierarchy[]) {
-    return pages.map((page) => (
+  function renderNotionPages(page: NotionPageHierarchy) {
+    return (
       <SidebarMenuSub key={page.pageId}>
         <Collapsible key={page.pageId} defaultOpen>
           <SidebarMenuSubItem>
@@ -152,13 +152,13 @@ export function DashboardSidebar() {
             </Tooltip>
             {page.children && page.children.length > 0 && (
               <CollapsibleContent>
-                {page.children.map((child) => renderNotionPages([child]))}
+                {page.children.map((child) => renderNotionPages(child))}
               </CollapsibleContent>
             )}
           </SidebarMenuSubItem>
         </Collapsible>
       </SidebarMenuSub>
-    ));
+    );
   }
 
   return (
@@ -198,7 +198,7 @@ export function DashboardSidebar() {
                         <CollapsibleContent>
                           {notionPages.children &&
                             notionPages.children.length > 0 &&
-                            renderNotionPages(notionPages.children)}
+                            renderNotionPages(notionPages)}
                         </CollapsibleContent>
                       </SidebarMenuItem>
                     ))}
