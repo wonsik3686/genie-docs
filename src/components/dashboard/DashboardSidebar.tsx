@@ -4,6 +4,7 @@ import {
   BookOpen,
   Brain,
   ChevronDown,
+  ChevronRight,
   ChevronsLeftIcon,
   ChevronsRightIcon,
   FileIcon,
@@ -79,7 +80,7 @@ const etcMenuItems = [
 ];
 
 export function DashboardSidebar() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const { setOpen } = useSidebar();
 
   const notionPageId = useSettingStore((state) => state.notionPageId);
@@ -107,40 +108,27 @@ export function DashboardSidebar() {
     }
   }
 
-  function NotionPageChevron({ hasChildren }: { hasChildren: boolean }) {
-    const [isOpen, setIsOpen] = useState(false);
-
-    const toggleOpen = () => {
-      setIsOpen(!isOpen);
-    };
-
-    return (
-      <div onClick={toggleOpen} className="flex cursor-pointer items-center">
-        {hasChildren && (
-          <ChevronDown
-            className={`ml-auto h-4 w-4 transition-transform duration-300 ${
-              isOpen ? 'rotate-180' : ''
-            }`}
-          />
-        )}
-      </div>
-    );
-  }
-
   function renderNotionPages(page: NotionPageHierarchy) {
     return (
       <SidebarMenuSub key={page.pageId}>
-        <Collapsible key={page.pageId} defaultOpen>
+        <Collapsible
+          key={page.pageId}
+          defaultOpen={false}
+          className={`group/collapsible${page.pageId}`}
+        >
           <SidebarMenuSubItem>
             <Tooltip>
               <TooltipTrigger>
                 <CollapsibleTrigger asChild>
-                  <SidebarMenuButton asChild>
-                    <Link href={`/dashboard/notion/page?pageId=${page.pageId}`}>
+                  <SidebarMenuButton className="w-40" asChild>
+                    <Link
+                      className="flex w-full items-center justify-between"
+                      href={`/dashboard/notion/page?pageId=${page.pageId}`}
+                    >
                       <FileIcon />
                       <span className="w-full truncate">{page.pageTitle}</span>
-                      <NotionPageChevron
-                        hasChildren={page.children.length > 0}
+                      <ChevronDown
+                        className={`ml-auto transition-transform group-data-[state=open]/collapsible${page.pageId}:rotate-90`}
                       />
                     </Link>
                   </SidebarMenuButton>
@@ -162,7 +150,7 @@ export function DashboardSidebar() {
   }
 
   return (
-    <Sidebar className="mt-16 pr-0" variant="floating" collapsible="icon">
+    <Sidebar className="mt-16 w-64 pr-0" variant="floating" collapsible="icon">
       <TooltipProvider>
         <Button
           onClick={handleToggleSidebar}
@@ -177,21 +165,26 @@ export function DashboardSidebar() {
             <ChevronsRightIcon className="h-4 w-4" />
           )}
         </Button>
-        <ScrollArea className="rounded-md">
-          <SidebarContent>
+        <SidebarContent className="pr-0">
+          <ScrollArea>
             <SidebarGroup>
               <SidebarGroupLabel>문서</SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  <Collapsible defaultOpen className="group/collapsible">
+                  <Collapsible
+                    defaultOpen={false}
+                    className="group/collapsible"
+                  >
                     {documentsMenuItems.map((item) => (
                       <SidebarMenuItem key={item.title}>
                         <CollapsibleTrigger asChild>
                           <SidebarMenuButton asChild>
                             <Button variant="ghost">
                               <BookOpen />
-                              <span>{item.title}</span>
-                              <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+                              <span className="w-full truncate">
+                                {item.title}
+                              </span>
+                              <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
                             </Button>
                           </SidebarMenuButton>
                         </CollapsibleTrigger>
@@ -240,8 +233,8 @@ export function DashboardSidebar() {
                 </SidebarMenu>
               </SidebarGroupContent>
             </SidebarGroup>
-          </SidebarContent>
-        </ScrollArea>
+          </ScrollArea>
+        </SidebarContent>
       </TooltipProvider>
     </Sidebar>
   );
