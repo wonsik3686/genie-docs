@@ -1,37 +1,10 @@
-# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
-
 language: 'ko-KR'
-
 reviews:
-  auto_review:
-    enabled: true # 자동 리뷰 활성화
-  review_status: true # 리뷰 상태 메시지 표시
-  base_branch: dev # 리뷰의 기본 브랜치 설정
   profile: 'chill'
   poem: true
-
-commands:
-  enable: # 명령어 활성화 설정
-    - pause
-    - resume
-    - review
-    - full_review
-    - summary
-    - generate_docstrings
-    - resolve
-    - configuration
-    - help
-
-ignore_keywords:
-  - '@coderabbitai ignore' # 특정 PR이 리뷰되지 않도록 하는 키워드
-
-summary_keywords:
-  - '@coderabbitai summary' # 고수준 요약을 생성하는 키워드
-
-title_keywords:
-  - '@coderabbitai' # 제목을 자동으로 생성하는 키워드
-
+  review_status: true
+  base_branch: main
+  auto_review:
+    enabled: true
 chat:
   auto_reply: true # 자동 응답 활성화
-
-# 필요에 따라 추가 설정 옵션을 여기에 추가할 수 있습니다
