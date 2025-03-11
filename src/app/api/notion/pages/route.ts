@@ -38,8 +38,16 @@ export async function GET(req: NextRequest) {
     const pageInfo: GetPageResponse = await notion.pages.retrieve({
       page_id: parentPageId,
     });
+
     if ('properties' in pageInfo && 'Name' in pageInfo.properties) {
       const titleProperty = pageInfo.properties.Name;
+      if (titleProperty.type === 'title' && titleProperty.title.length > 0) {
+        pages.pageTitle = titleProperty.title[0].plain_text;
+      } else {
+        pages.pageTitle = '제목 없음';
+      }
+    } else if ('properties' in pageInfo && 'title' in pageInfo.properties) {
+      const titleProperty = pageInfo.properties.title;
       if (titleProperty.type === 'title' && titleProperty.title.length > 0) {
         pages.pageTitle = titleProperty.title[0].plain_text;
       } else {
