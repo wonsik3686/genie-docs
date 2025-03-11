@@ -15,12 +15,13 @@ import {
   settingSchema,
   type SettingSchemaType,
 } from '@/constants/formSchemas/settingSchemas.schema';
-import { useSettingStore } from '@/store/settingStore';
+import { useInitializeSettings, useSettingStore } from '@/store/settingStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 export default function SettingForm() {
+  useInitializeSettings();
   const {
     notionApiKey,
     notionPageId,
@@ -40,7 +41,6 @@ export default function SettingForm() {
     },
   });
 
-  // 스토어의 값으로 폼 초기화
   useEffect(() => {
     form.reset({
       notionApiKey,
@@ -49,7 +49,6 @@ export default function SettingForm() {
     });
   }, [form, notionApiKey, notionPageId, openAiApiKey]);
 
-  // 폼 값 변경 감지
   const formValues = form.watch();
   const hasUnsavedChanges =
     formValues.notionApiKey !== notionApiKey ||
