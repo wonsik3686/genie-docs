@@ -7,17 +7,19 @@ import {
   ChevronRight,
   ChevronsLeftIcon,
   ChevronsRightIcon,
-  FileIcon,
+  FileText,
   Settings,
 } from 'lucide-react';
 
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarMenu,
+  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
@@ -58,26 +60,26 @@ const documentsMenuItems = [
   },
 ];
 
-const aiMenuItems = [
-  {
-    title: 'AI',
-    url: '/dashboard/ai',
-    icon: Brain,
-  },
-  {
-    title: '프로젝트 개요 문서 생성',
-    url: '/dashboard/ai/project-overview',
-    icon: Brain,
-  },
-];
+// const aiMenuItems = [
+//   {
+//     title: 'AI',
+//     url: '/dashboard/ai',
+//     icon: Brain,
+//   },
+//   {
+//     title: '프로젝트 개요 문서 생성',
+//     url: '/dashboard/ai/project-overview',
+//     icon: Brain,
+//   },
+// ];
 
-const etcMenuItems = [
-  {
-    title: '설정',
-    url: '/dashboard/settings',
-    icon: Settings,
-  },
-];
+// const etcMenuItems = [
+//   {
+//     title: '설정',
+//     url: '/dashboard/settings',
+//     icon: Settings,
+//   },
+// ];
 
 export function DashboardSidebar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -114,25 +116,30 @@ export function DashboardSidebar() {
         <Collapsible
           key={page.pageId}
           defaultOpen={false}
-          className={`group/collapsible${page.pageId}`}
+          className="group/collapsible"
         >
           <SidebarMenuSubItem>
             <Tooltip>
               <TooltipTrigger>
                 <CollapsibleTrigger asChild>
-                  <SidebarMenuButton className="w-40" asChild>
+                  <SidebarMenuButton className="max-w-52" asChild>
                     <Link
                       className="flex w-full items-center justify-between"
                       href={`/dashboard/notion/page?pageId=${page.pageId}`}
                     >
-                      <FileIcon />
+                      {/* <FileIcon /> */}
+                      {page.children && page.children.length > 0 && (
+                        <ChevronDown className="transition-transform group-data-[state=isOpen]/collapsible:rotate-0" />
+                      )}
                       <span className="w-full truncate">{page.pageTitle}</span>
-                      <ChevronDown
-                        className={`ml-auto transition-transform group-data-[state=open]/collapsible${page.pageId}:rotate-90`}
-                      />
                     </Link>
                   </SidebarMenuButton>
                 </CollapsibleTrigger>
+                {/* <SidebarMenuAction className="hover:bg-secondary"> */}
+                {/* {page.children && page.children.length > 0 && (
+                    <ChevronRight className="transition-transform group-data-[state=open]/collapsible:rotate-90" />
+                  )} */}
+                {/* </SidebarMenuAction> */}
               </TooltipTrigger>
               <TooltipContent>
                 <p>{page.pageTitle}</p>
@@ -150,7 +157,7 @@ export function DashboardSidebar() {
   }
 
   return (
-    <Sidebar className="mt-16 w-64 pr-0" variant="floating" collapsible="icon">
+    <Sidebar className="w-64 pr-0 pt-20" variant="floating" collapsible="icon">
       <TooltipProvider>
         <Button
           onClick={handleToggleSidebar}
@@ -176,24 +183,22 @@ export function DashboardSidebar() {
                     className="group/collapsible"
                   >
                     {documentsMenuItems.map((item) => (
-                      <SidebarMenuItem key={item.title}>
-                        <CollapsibleTrigger asChild>
-                          <SidebarMenuButton asChild>
-                            <Button variant="ghost">
-                              <BookOpen />
-                              <span className="w-full truncate">
-                                {item.title}
-                              </span>
-                              <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
-                            </Button>
+                      <CollapsibleTrigger key={item.title} asChild>
+                        <SidebarMenuItem className="max-w-56" key={item.title}>
+                          <SidebarMenuButton>
+                            <BookOpen />
+                            {item.title}
                           </SidebarMenuButton>
-                        </CollapsibleTrigger>
-                        <CollapsibleContent>
-                          {notionPages.children &&
-                            notionPages.children.length > 0 &&
-                            renderNotionPages(notionPages)}
-                        </CollapsibleContent>
-                      </SidebarMenuItem>
+                          <SidebarMenuAction className="hover:bg-secondary">
+                            <ChevronRight className="transition-transform group-data-[state=open]/collapsible:rotate-90" />
+                          </SidebarMenuAction>
+                          <CollapsibleContent>
+                            {notionPages.children &&
+                              notionPages.children.length > 0 &&
+                              renderNotionPages(notionPages)}
+                          </CollapsibleContent>
+                        </SidebarMenuItem>
+                      </CollapsibleTrigger>
                     ))}
                   </Collapsible>
                 </SidebarMenu>
@@ -203,37 +208,50 @@ export function DashboardSidebar() {
               <SidebarGroupLabel>메뉴</SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  {aiMenuItems.map((item) => (
-                    <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton asChild>
-                        <Link href={item.url}>
-                          <item.icon />
-                          <span>{item.title}</span>
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))}
+                  <Collapsible defaultOpen className="group/collapsible">
+                    <CollapsibleTrigger asChild>
+                      <SidebarMenuItem>
+                        <SidebarMenuButton asChild>
+                          <SidebarMenuButton>
+                            <Brain />
+                            자동 완성
+                          </SidebarMenuButton>
+                        </SidebarMenuButton>
+                        <SidebarMenuAction>
+                          <ChevronRight className="transition-transform group-data-[state=open]/collapsible:rotate-90" />
+                        </SidebarMenuAction>
+                        <CollapsibleContent>
+                          <SidebarMenuSub>
+                            <SidebarMenuSubItem>
+                              <SidebarMenuButton asChild>
+                                <Link href="/dashboard/ai/project-overview">
+                                  <FileText />
+                                  프로젝트 개요 문서
+                                </Link>
+                              </SidebarMenuButton>
+                            </SidebarMenuSubItem>
+                          </SidebarMenuSub>
+                        </CollapsibleContent>
+                      </SidebarMenuItem>
+                    </CollapsibleTrigger>
+                  </Collapsible>
                 </SidebarMenu>
               </SidebarGroupContent>
             </SidebarGroup>
             <SidebarSeparator />
-            <SidebarGroup>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {etcMenuItems.map((item) => (
-                    <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton asChild>
-                        <Link href={item.url}>
-                          <item.icon />
-                          <span>{item.title}</span>
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
           </ScrollArea>
+          <SidebarFooter>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link href="/dashboard/settings">
+                    <Settings />
+                    <span>설정</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarFooter>
         </SidebarContent>
       </TooltipProvider>
     </Sidebar>
