@@ -4,7 +4,6 @@ import {
   BookOpen,
   Brain,
   ChevronDown,
-  ChevronRight,
   ChevronsLeftIcon,
   ChevronsRightIcon,
   FileIcon,
@@ -46,30 +45,12 @@ import {
 } from '../ui/tooltip';
 
 const documentsMenuItems = [
-  // {
-  //   title: '노션 페이지 전체 보기',
-  //   url: '/dashboard/notion/pages',
-  //   icon: BookOpen,
-  // },
   {
     title: '노션 페이지',
     url: '/dashboard/notion',
     icon: BookOpen,
   },
 ];
-
-// const aiMenuItems = [
-//   {
-//     title: 'AI',
-//     url: '/dashboard/ai',
-//     icon: Brain,
-//   },
-//   {
-//     title: '프로젝트 개요 문서 생성',
-//     url: '/dashboard/ai/project-overview',
-//     icon: Brain,
-//   },
-// ];
 
 const etcMenuItems = [
   {
@@ -79,7 +60,7 @@ const etcMenuItems = [
   },
 ];
 
-export function DashboardSidebar() {
+export function DashboardSidebar2() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const { setOpen } = useSidebar();
 
@@ -87,35 +68,15 @@ export function DashboardSidebar() {
   useNotionPages(notionPageId);
   const notionPages = useNotionStore((state) => state.pages);
 
-  function handleMouseEnter() {
-    setOpen(true);
-  }
-
-  function handleMouseLeave() {
-    if (!isSidebarOpen) {
-      setOpen(false);
-      setIsSidebarOpen(false);
-    }
-  }
-
   function handleToggleSidebar() {
-    if (isSidebarOpen) {
-      setOpen(false);
-      setIsSidebarOpen(false);
-    } else {
-      setOpen(true);
-      setIsSidebarOpen(true);
-    }
+    setIsSidebarOpen((prev) => !prev);
+    setOpen(!isSidebarOpen);
   }
 
   function renderNotionPages(page: NotionPageHierarchy) {
     return (
       <SidebarMenuSub key={page.pageId}>
-        <Collapsible
-          key={page.pageId}
-          defaultOpen={false}
-          className={`group/collapsible${page.pageId}`}
-        >
+        <Collapsible key={page.pageId} defaultOpen={false}>
           <SidebarMenuSubItem>
             <Tooltip>
               <TooltipTrigger>
@@ -128,7 +89,9 @@ export function DashboardSidebar() {
                       <FileIcon />
                       <span className="w-full truncate">{page.pageTitle}</span>
                       <ChevronDown
-                        className={`ml-auto transition-transform group-data-[state=open]/collapsible${page.pageId}:rotate-90`}
+                        className={`ml-auto transition-transform ${
+                          isSidebarOpen ? 'rotate-90' : ''
+                        }`}
                       />
                     </Link>
                   </SidebarMenuButton>
@@ -154,8 +117,6 @@ export function DashboardSidebar() {
       <TooltipProvider>
         <Button
           onClick={handleToggleSidebar}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
           variant="ghost"
           className="ml-1 mt-3 h-10 w-10 rounded-full"
         >
@@ -171,40 +132,7 @@ export function DashboardSidebar() {
               <SidebarGroupLabel>문서</SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  <Collapsible
-                    defaultOpen={false}
-                    className="group/collapsible"
-                  >
-                    {documentsMenuItems.map((item) => (
-                      <SidebarMenuItem key={item.title}>
-                        <CollapsibleTrigger asChild>
-                          <SidebarMenuButton asChild>
-                            <Button variant="ghost">
-                              <BookOpen />
-                              <span className="w-full truncate">
-                                {item.title}
-                              </span>
-                              <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
-                            </Button>
-                          </SidebarMenuButton>
-                        </CollapsibleTrigger>
-                        <CollapsibleContent>
-                          {notionPages.children &&
-                            notionPages.children.length > 0 &&
-                            renderNotionPages(notionPages)}
-                        </CollapsibleContent>
-                      </SidebarMenuItem>
-                    ))}
-                  </Collapsible>
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
-            <SidebarGroup>
-              <SidebarGroupLabel>메뉴</SidebarGroupLabel>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  <Collapsible defaultOpen className="group/collapsible">
-                    {/* {aiMenuItems.map((item) => (
+                  {documentsMenuItems.map((item) => (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton asChild>
                         <Link href={item.url}>
@@ -213,27 +141,34 @@ export function DashboardSidebar() {
                         </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
-                  ))} */}
-                    <SidebarMenuItem>
-                      <CollapsibleTrigger asChild>
-                        <SidebarMenuButton asChild>
-                          <Link href="/dashboard/ai">
-                            <Brain />
-                            <span>AI</span>
+                  ))}
+                  {notionPages.children &&
+                    notionPages.children.length > 0 &&
+                    renderNotionPages(notionPages)}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+            <SidebarGroup>
+              <SidebarGroupLabel>메뉴</SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild>
+                      <Button variant="ghost">
+                        <Brain />
+                        <span>자동 완성</span>
+                      </Button>
+                    </SidebarMenuButton>
+                    <CollapsibleContent>
+                      <SidebarMenuSub>
+                        <SidebarMenuSubItem>
+                          <Link href="/dashboard/ai/project-overview">
+                            <span>프로젝트 개요 문서</span>
                           </Link>
-                        </SidebarMenuButton>
-                      </CollapsibleTrigger>
-                      <CollapsibleContent>
-                        <SidebarMenuSub>
-                          <SidebarMenuSubItem>
-                            <Link href="/dashboard/ai/project-overview">
-                              <span>프로젝트 개요 문서 생성</span>
-                            </Link>
-                          </SidebarMenuSubItem>
-                        </SidebarMenuSub>
-                      </CollapsibleContent>
-                    </SidebarMenuItem>
-                  </Collapsible>
+                        </SidebarMenuSubItem>
+                      </SidebarMenuSub>
+                    </CollapsibleContent>
+                  </SidebarMenuItem>
                 </SidebarMenu>
               </SidebarGroupContent>
             </SidebarGroup>
