@@ -27,6 +27,9 @@ export const useOpenAIStore = create<OpenAIState & OpenAIAction>()(
     {
       name: 'openai-store',
       storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({
+        storedAIResponse: state.storedAIResponse,
+      }),
     }
   )
 );

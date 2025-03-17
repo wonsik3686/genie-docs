@@ -220,13 +220,14 @@ export function DashboardSidebar() {
                           <Link href="/dashboard/ai">
                             <Brain />
                             <span>AI</span>
+                            <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
                           </Link>
                         </SidebarMenuButton>
                       </CollapsibleTrigger>
                       <CollapsibleContent>
                         <SidebarMenuSub>
                           <SidebarMenuSubItem>
-                            <Link href="/dashboard/ai/project-overview">
+                            <Link href="/dashboard/ai/templates/overview">
                               <span>프로젝트 개요 문서 생성</span>
                             </Link>
                           </SidebarMenuSubItem>

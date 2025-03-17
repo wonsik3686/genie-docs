@@ -60,7 +60,7 @@ export function useCreateNotionPage() {
       title: string;
       content: string;
     }) => {
-      const response = await fetch('/api/notion/createPage', {
+      const response = await fetch('/api/notion/page', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

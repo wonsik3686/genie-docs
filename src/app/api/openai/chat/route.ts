@@ -3,7 +3,7 @@ import { AIResponse } from '@/types/openai.types';
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 export async function POST(req: NextRequest) {
-  const { prompt } = await req.json();
+  const { prompt, template, openAIKey } = await req.json();
 
   if (!prompt) {
     return NextResponse.json(
@@ -13,8 +13,22 @@ export async function POST(req: NextRequest) {
   }
 
   const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
+    apiKey: openAIKey,
   });
+
+  let messageContent = '';
+  if (template === 'project-overview') {
+    messageContent =
+      'You are a helpful assistant that generates project overview documents.';
+  } else if (template === 'api-document') {
+    messageContent =
+      'You are a helpful assistant that generates API documents.';
+  } else if (template === 'readme') {
+    messageContent =
+      'You are a helpful assistant that generates README documents.';
+  } else if (template === 'custom') {
+    messageContent = 'You are a helpful assistant that generates documents.';
+  }
 
   try {
     const response = await openai.chat.completions.create({
@@ -22,8 +36,7 @@ export async function POST(req: NextRequest) {
       messages: [
         {
           role: 'developer',
-          content:
-            'You are a helpful assistant that generates project overview documents.',
+          content: messageContent,
         },
         { role: 'user', content: prompt },
       ],
@@ -31,14 +44,11 @@ export async function POST(req: NextRequest) {
       temperature: 0.7,
     });
 
-    const message =
-      response.choices[0].message.content?.trim() || 'No response';
-
     const aiResponse: AIResponse = {
-      id: '',
-      template: 'project-overview',
-      title: '',
-      content: message,
+      id: response.id,
+      template: template,
+      title: template,
+      content: response.choices[0].message.content?.trim() || '',
       createdAt: new Date().toISOString(),
     };
 

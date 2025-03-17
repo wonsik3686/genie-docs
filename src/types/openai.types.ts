@@ -6,4 +6,8 @@ export type AIResponse = {
   createdAt: string;
 };
 
-export type AITemplate = 'project-overview' | 'api-document' | 'readme';
+export type AITemplate =
+  | 'project-overview'
+  | 'api-document'
+  | 'readme'
+  | 'custom';
