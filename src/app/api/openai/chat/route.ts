@@ -12,6 +12,20 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  if (!openAIKey) {
+    return NextResponse.json(
+      { success: false, error: 'OpenAI API Key is required' },
+      { status: 400 }
+    );
+  }
+
+  if (!template) {
+    return NextResponse.json(
+      { success: false, error: 'Template type is required' },
+      { status: 400 }
+    );
+  }
+
   const openai = new OpenAI({
     apiKey: openAIKey,
   });
