@@ -11,7 +11,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { ReadmeTemplateSchemaType } from '@/constants/formSchemas/ReadmeTemplate.schema';
-import OverviewPromptTemplate from '@/constants/promptTemplates/OverviewTemplatePrompt';
+import ReadmeTemplatePrompt from '@/constants/promptTemplates/ReadmeTemplatePrompt';
 import { useAskOpenAI } from '@/queries/openai.queries';
 import { useNotionStore } from '@/store/notionStore';
 import { useInitializeSettings, useSettingStore } from '@/store/settingStore';
@@ -55,7 +55,7 @@ function ReadmeTemplateForm() {
       .filter(Boolean)
       .join('; ');
 
-    const promptWithPages = OverviewPromptTemplate(
+    const promptWithPages = ReadmeTemplatePrompt(
       form.getValues('projectName'),
       form.getValues('installation'),
       form.getValues('usage'),
@@ -66,7 +66,7 @@ function ReadmeTemplateForm() {
 
     askOpenAI({
       prompt: promptWithPages,
-      template: 'project-overview',
+      template: 'readme',
       openAIKey: openAiApiKey,
     });
   };
