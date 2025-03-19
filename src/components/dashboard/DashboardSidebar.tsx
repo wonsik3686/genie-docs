@@ -2,11 +2,13 @@
 
 import {
   BookOpen,
+  BookOpenIcon,
   Brain,
   ChevronDown,
   ChevronRight,
   ChevronsLeftIcon,
   ChevronsRightIcon,
+  CodeIcon,
   FileIcon,
   Settings,
 } from 'lucide-react';
@@ -227,8 +229,36 @@ export function DashboardSidebar() {
                       <CollapsibleContent>
                         <SidebarMenuSub>
                           <SidebarMenuSubItem>
-                            <Link href="/dashboard/ai/templates/overview">
-                              <span>프로젝트 개요 문서 생성</span>
+                            <Link
+                              className="flex items-center gap-2"
+                              href="/dashboard/ai/templates/overview"
+                            >
+                              <BookOpenIcon className="h-4 w-4" />
+                              <span className="w-full truncate">
+                                프로젝트 개요 문서 생성
+                              </span>
+                            </Link>
+                          </SidebarMenuSubItem>
+                          <SidebarMenuSubItem>
+                            <Link
+                              className="flex items-center gap-2"
+                              href="/dashboard/ai/templates/readme"
+                            >
+                              <FileIcon className="h-4 w-4" />
+                              <span className="w-full truncate">
+                                README 문서 생성
+                              </span>
+                            </Link>
+                          </SidebarMenuSubItem>
+                          <SidebarMenuSubItem>
+                            <Link
+                              className="flex items-center gap-2"
+                              href="/dashboard/ai/templates/api"
+                            >
+                              <CodeIcon className="h-4 w-4" />
+                              <span className="w-full truncate">
+                                API 문서 생성
+                              </span>
                             </Link>
                           </SidebarMenuSubItem>
                         </SidebarMenuSub>

@@ -10,8 +10,8 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { OverviewTemplateSchemaType } from '@/constants/formSchemas/OverviewTemplate.schema';
-import OverviewPromptTemplate from '@/constants/promptTemplates/OverviewTemplatePrompt';
+import { APITemplateSchemaType } from '@/constants/formSchemas/APITemplate.schema';
+import APITemplatePrompt from '@/constants/promptTemplates/APITemplatePrompt';
 import { useAskOpenAI } from '@/queries/openai.queries';
 import { useNotionStore } from '@/store/notionStore';
 import { useInitializeSettings, useSettingStore } from '@/store/settingStore';
@@ -23,7 +23,7 @@ import { useForm } from 'react-hook-form';
 import { Card, CardContent } from '../ui/card';
 import SelectPageDialog from './SelectPageDialog';
 
-function OverviewTemplateForm() {
+function ApiTemplateForm() {
   useInitializeSettings();
   const { selectedPages } = useNotionStore();
   const { openAiApiKey } = useSettingStore();
@@ -32,12 +32,18 @@ function OverviewTemplateForm() {
     Array<{ pageId: string; blocks: BlockObjectResponse[] }>
   >([]);
 
-  const form = useForm<OverviewTemplateSchemaType>({
+  const form = useForm<APITemplateSchemaType>({
     defaultValues: {
-      projectName: '',
-      goalAndBackground: '',
-      keyFeatures: '',
-      targetUsers: '',
+      apiName: '',
+      requestFormat: {
+        headers: '',
+        body: '',
+      },
+      responseFormat: {
+        status: '',
+        body: '',
+      },
+      examples: '',
       additionalPrompt: '',
     },
   });
@@ -55,18 +61,25 @@ function OverviewTemplateForm() {
       .filter(Boolean)
       .join('; ');
 
-    const promptWithPages = OverviewPromptTemplate(
-      form.getValues('projectName'),
-      form.getValues('goalAndBackground'),
-      form.getValues('keyFeatures'),
-      form.getValues('targetUsers'),
+    const requestFormat =
+      form.getValues('requestFormat.headers') +
+      form.getValues('requestFormat.body');
+    const responseFormat =
+      form.getValues('responseFormat.status') +
+      form.getValues('responseFormat.body');
+
+    const promptWithPages = APITemplatePrompt(
+      form.getValues('apiName'),
+      requestFormat,
+      responseFormat,
+      form.getValues('examples'),
       form.getValues('additionalPrompt'),
       selectedPagesString
     );
 
     askOpenAI({
       prompt: promptWithPages,
-      template: 'project-overview',
+      template: 'api-document',
       openAIKey: openAiApiKey,
     });
   };
@@ -95,14 +108,14 @@ function OverviewTemplateForm() {
           </Card>
           <FormField
             control={form.control}
-            name="projectName"
+            name="apiName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>프로젝트 이름</FormLabel>
+                <FormLabel>API 이름</FormLabel>
                 <FormControl>
                   <Input
-                    id="projectName"
-                    placeholder="프로젝트 이름을 입력해주세요. (100자 이하)"
+                    id="apiName"
+                    placeholder="API 이름을 입력해주세요. (100자 이하)"
                     {...field}
                   />
                 </FormControl>
@@ -112,14 +125,14 @@ function OverviewTemplateForm() {
 
           <FormField
             control={form.control}
-            name="goalAndBackground"
+            name="requestFormat.headers"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>목표 및 배경</FormLabel>
+                <FormLabel>요청 헤더</FormLabel>
                 <FormControl>
                   <Textarea
-                    id="goalAndBackground"
-                    placeholder="목표 및 배경을 입력해주세요. (1000자 이하)"
+                    id="requestFormat.headers"
+                    placeholder="요청 헤더에 대한 설명을 입력해주세요. (1000자 이하)"
                     {...field}
                   />
                 </FormControl>
@@ -128,14 +141,14 @@ function OverviewTemplateForm() {
           />
           <FormField
             control={form.control}
-            name="keyFeatures"
+            name="requestFormat.body"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>주요 기능</FormLabel>
+                <FormLabel>요청 바디</FormLabel>
                 <FormControl>
                   <Textarea
-                    id="keyFeatures"
-                    placeholder="주요 기능을 입력해주세요. (1000자 이하)"
+                    id="requestFormat.body"
+                    placeholder="요청 바디에 대한 설명을 입력해주세요. (1000자 이하)"
                     {...field}
                   />
                 </FormControl>
@@ -144,14 +157,46 @@ function OverviewTemplateForm() {
           />
           <FormField
             control={form.control}
-            name="targetUsers"
+            name="responseFormat.status"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>대상 사용자</FormLabel>
+                <FormLabel>응답 헤더</FormLabel>
                 <FormControl>
                   <Textarea
-                    id="targetUsers"
-                    placeholder="대상 사용자를 입력해주세요. (1000자 이하)"
+                    id="responseFormat.status"
+                    placeholder="응답 헤더에 대한 설명을 입력해주세요. (1000자 이하)"
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="responseFormat.body"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>응답 바디</FormLabel>
+                <FormControl>
+                  <Textarea
+                    id="responseFormat.body"
+                    placeholder="응답 바디에 대한 설명을 입력해주세요. (1000자 이하)"
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="examples"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>사용 예제</FormLabel>
+                <FormControl>
+                  <Textarea
+                    id="examples"
+                    placeholder="사용 예제를 입력해주세요. (1000자 이하)"
                     {...field}
                   />
                 </FormControl>
@@ -187,4 +232,4 @@ function OverviewTemplateForm() {
   );
 }
 
-export default OverviewTemplateForm;
+export default ApiTemplateForm;

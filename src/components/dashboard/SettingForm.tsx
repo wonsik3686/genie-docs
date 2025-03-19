@@ -14,7 +14,7 @@ import { Input } from '@/components/ui/input';
 import {
   settingSchema,
   type SettingSchemaType,
-} from '@/constants/formSchemas/SettingSchemas.schema';
+} from '@/constants/formSchemas/Setting.schema';
 import { useInitializeSettings, useSettingStore } from '@/store/settingStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';

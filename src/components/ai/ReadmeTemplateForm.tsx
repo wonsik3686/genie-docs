@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { OverviewTemplateSchemaType } from '@/constants/formSchemas/OverviewTemplate.schema';
+import { ReadmeTemplateSchemaType } from '@/constants/formSchemas/ReadmeTemplate.schema';
 import OverviewPromptTemplate from '@/constants/promptTemplates/OverviewTemplatePrompt';
 import { useAskOpenAI } from '@/queries/openai.queries';
 import { useNotionStore } from '@/store/notionStore';
@@ -23,7 +23,7 @@ import { useForm } from 'react-hook-form';
 import { Card, CardContent } from '../ui/card';
 import SelectPageDialog from './SelectPageDialog';
 
-function OverviewTemplateForm() {
+function ReadmeTemplateForm() {
   useInitializeSettings();
   const { selectedPages } = useNotionStore();
   const { openAiApiKey } = useSettingStore();
@@ -32,12 +32,12 @@ function OverviewTemplateForm() {
     Array<{ pageId: string; blocks: BlockObjectResponse[] }>
   >([]);
 
-  const form = useForm<OverviewTemplateSchemaType>({
+  const form = useForm<ReadmeTemplateSchemaType>({
     defaultValues: {
       projectName: '',
-      goalAndBackground: '',
-      keyFeatures: '',
-      targetUsers: '',
+      installation: '',
+      usage: '',
+      contribution: '',
       additionalPrompt: '',
     },
   });
@@ -57,9 +57,9 @@ function OverviewTemplateForm() {
 
     const promptWithPages = OverviewPromptTemplate(
       form.getValues('projectName'),
-      form.getValues('goalAndBackground'),
-      form.getValues('keyFeatures'),
-      form.getValues('targetUsers'),
+      form.getValues('installation'),
+      form.getValues('usage'),
+      form.getValues('contribution'),
       form.getValues('additionalPrompt'),
       selectedPagesString
     );
@@ -112,14 +112,14 @@ function OverviewTemplateForm() {
 
           <FormField
             control={form.control}
-            name="goalAndBackground"
+            name="installation"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>목표 및 배경</FormLabel>
+                <FormLabel>설치 방법</FormLabel>
                 <FormControl>
                   <Textarea
-                    id="goalAndBackground"
-                    placeholder="목표 및 배경을 입력해주세요. (1000자 이하)"
+                    id="installation"
+                    placeholder="설치 방법을 입력해주세요. (1000자 이하)"
                     {...field}
                   />
                 </FormControl>
@@ -128,14 +128,14 @@ function OverviewTemplateForm() {
           />
           <FormField
             control={form.control}
-            name="keyFeatures"
+            name="usage"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>주요 기능</FormLabel>
+                <FormLabel>사용 방법</FormLabel>
                 <FormControl>
                   <Textarea
-                    id="keyFeatures"
-                    placeholder="주요 기능을 입력해주세요. (1000자 이하)"
+                    id="usage"
+                    placeholder="사용 방법을 입력해주세요. (1000자 이하)"
                     {...field}
                   />
                 </FormControl>
@@ -144,14 +144,14 @@ function OverviewTemplateForm() {
           />
           <FormField
             control={form.control}
-            name="targetUsers"
+            name="contribution"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>대상 사용자</FormLabel>
+                <FormLabel>기여 방법</FormLabel>
                 <FormControl>
                   <Textarea
-                    id="targetUsers"
-                    placeholder="대상 사용자를 입력해주세요. (1000자 이하)"
+                    id="contribution"
+                    placeholder="기여한 내용을 입력해주세요. (1000자 이하)"
                     {...field}
                   />
                 </FormControl>
@@ -187,4 +187,4 @@ function OverviewTemplateForm() {
   );
 }
 
-export default OverviewTemplateForm;
+export default ReadmeTemplateForm;
