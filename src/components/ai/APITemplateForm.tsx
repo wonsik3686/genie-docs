@@ -15,10 +15,7 @@ import APITemplatePrompt from '@/constants/promptTemplates/APITemplatePrompt';
 import { useAskOpenAI } from '@/queries/openai.queries';
 import { useNotionStore } from '@/store/notionStore';
 import { useInitializeSettings, useSettingStore } from '@/store/settingStore';
-import { getTextFromBlock } from '@/utils/notion.utils';
-import { BlockObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 import { File, Loader2 } from 'lucide-react';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Card, CardContent } from '../ui/card';
 import SelectPageDialog from './SelectPageDialog';
@@ -28,9 +25,6 @@ function ApiTemplateForm() {
   const { selectedPages } = useNotionStore();
   const { openAiApiKey } = useSettingStore();
   const { mutate: askOpenAI, isPending } = useAskOpenAI();
-  const [pageContents] = useState<
-    Array<{ pageId: string; blocks: BlockObjectResponse[] }>
-  >([]);
 
   const form = useForm<APITemplateSchemaType>({
     defaultValues: {
@@ -50,15 +44,11 @@ function ApiTemplateForm() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const selectedPagesString = pageContents
+    const selectedPagesString = selectedPages
       .map((content) => {
-        if (!content.blocks) return '';
-        return `내용: ${content.blocks
-          .map((block) => getTextFromBlock(block))
-          .filter(Boolean)
-          .join(', ')}`;
+        if (!content.pageContent) return '';
+        return `내용: ${content.pageContent}`;
       })
-      .filter(Boolean)
       .join('; ');
 
     const requestFormat =

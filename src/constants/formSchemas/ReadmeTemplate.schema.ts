@@ -10,12 +10,15 @@ const contributionSchema = z.string().min(1, '기여 방법은 필수입니다.'
 
 const additionalPromptSchema = z.string().min(1, '추가 프롬프트는 필수입니다.');
 
+const relatedInfoSchema = z.string().min(1, '관련 정보는 필수입니다.');
+
 export const readmeTemplateSchema = z.object({
   projectName: projectNameSchema,
   installation: installationSchema,
   usage: usageSchema,
   contribution: contributionSchema,
   additionalPrompt: additionalPromptSchema,
+  relatedInfo: relatedInfoSchema,
 });
 
 export type ReadmeTemplateSchemaType = z.infer<typeof readmeTemplateSchema>;
