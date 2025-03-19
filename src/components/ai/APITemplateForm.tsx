@@ -51,12 +51,8 @@ function ApiTemplateForm() {
       })
       .join('; ');
 
-    const requestFormat =
-      form.getValues('requestFormat.headers') +
-      form.getValues('requestFormat.body');
-    const responseFormat =
-      form.getValues('responseFormat.status') +
-      form.getValues('responseFormat.body');
+    const requestFormat = `헤더: ${form.getValues('requestFormat.headers')}\n\n바디: ${form.getValues('requestFormat.body')}`;
+    const responseFormat = `상태: ${form.getValues('responseFormat.status')}\n\n바디: ${form.getValues('responseFormat.body')}`;
 
     const promptWithPages = APITemplatePrompt(
       form.getValues('apiName'),
