@@ -30,31 +30,29 @@ export async function POST(req: NextRequest) {
     apiKey: openAIKey,
   });
 
-  let messageContent = '';
-  if (template === 'project-overview') {
-    messageContent =
-      'You are a helpful assistant that generates project overview documents.';
-  } else if (template === 'api-document') {
-    messageContent =
-      'You are a helpful assistant that generates API documents.';
-  } else if (template === 'readme') {
-    messageContent =
-      'You are a helpful assistant that generates README documents.';
-  } else if (template === 'custom') {
-    messageContent = 'You are a helpful assistant that generates documents.';
-  }
+  const templateMessages = {
+    'project-overview':
+      'You are a helpful assistant that generates project overview documents.',
+    'api-document': 'You are a helpful assistant that generates API documents.',
+    readme: 'You are a helpful assistant that generates README documents.',
+    custom: 'You are a helpful assistant that generates documents.',
+  };
+
+  const messageContent =
+    templateMessages[template as keyof typeof templateMessages] ||
+    'You are a helpful assistant.';
 
   try {
     const response = await openai.chat.completions.create({
       model: 'gpt-4-turbo',
       messages: [
         {
-          role: 'developer',
+          role: 'system',
           content: messageContent,
         },
         { role: 'user', content: prompt },
       ],
-      max_tokens: 1000,
+      max_tokens: 4000,
       temperature: 0.7,
     });
 
