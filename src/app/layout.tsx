@@ -1,6 +1,7 @@
 import Header from '@/components/layouts/Header';
 import { QueryProvider } from '@/components/providers/QueryProvider';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
+import { Toaster } from '@/components/ui/sonner';
 import type { Metadata } from 'next';
 import './globals.css';
 export const metadata: Metadata = {
@@ -20,6 +21,7 @@ export default function RootLayout({
           <ThemeProvider>
             <Header />
             {children}
+            <Toaster />
           </ThemeProvider>
         </QueryProvider>
       </body>
