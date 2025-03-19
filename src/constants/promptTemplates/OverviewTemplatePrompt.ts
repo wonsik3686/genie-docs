@@ -25,6 +25,7 @@ function OverviewPromptTemplate(
   if (relatedInfo) {
     prompt += `다음은 관련 정보입니다. ${relatedInfo} `;
   }
+  prompt += '이 정보를 바탕으로 프로젝트 개요 문서를 작성해 주세요.';
 
   return prompt;
 }
