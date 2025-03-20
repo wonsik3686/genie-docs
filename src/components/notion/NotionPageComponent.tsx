@@ -7,6 +7,16 @@ import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 import { Loader2 } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 
+/**
+ * Renders a Notion page view based on a pageId from the URL search parameters.
+ *
+ * If no pageId is provided, it shows a fallback message. The component uses custom hooks
+ * to fetch the Notion page data and its associated blocks, displaying a loading spinner during
+ * data retrieval and an error message if fetching fails. Once the data is successfully loaded,
+ * it renders the NotionPageMeta and NotionPageContent components.
+ *
+ * @returns The React element representing the current state of the Notion page view.
+ */
 function NotionPageComponent() {
   const searchParams = useSearchParams();
   const pageId = searchParams.get('pageId');

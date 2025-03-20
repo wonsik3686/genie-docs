@@ -7,6 +7,17 @@ import {
 import { parse } from 'cookie';
 import { NextRequest, NextResponse } from 'next/server';
 
+/**
+ * Handles an HTTP GET request to retrieve a Notion page.
+ *
+ * Extracts the `pageId` from the request's query parameters and the Notion API key from cookies.
+ * It creates a Notion client using the API key and retrieves the specified page details.
+ * If `pageId` is missing, it responds with a 400 error, and if an error occurs during retrieval,
+ * it responds with a 500 error indicating a retrieval failure.
+ *
+ * @param req - The incoming Next.js request containing query parameters and cookies.
+ * @returns A NextResponse JSON object with the page details or an error message.
+ */
 export async function GET(req: NextRequest) {
   try {
     const url = new URL(req.url);
@@ -35,6 +46,14 @@ export async function GET(req: NextRequest) {
   }
 }
 
+/**
+ * Creates a new page in Notion using details specified in the request.
+ *
+ * Extracts the parent page ID, title, and content from the JSON body of the provided request. Retrieves the Notion API key from the cookies to instantiate a Notion client, which is then used to create a page with the given title and a paragraph block containing the content. Returns the Notion API response as a JSON response, or a 500 error response if page creation fails.
+ *
+ * @param req - The HTTP request containing a JSON body with "parentPageId", "title", and "content", along with cookies holding the Notion API key.
+ * @returns A JSON response with the Notion page creation result or an error message with status 500.
+ */
 export async function POST(req: NextRequest) {
   const { parentPageId, title, content } = (await req.json()) as {
     parentPageId: string;

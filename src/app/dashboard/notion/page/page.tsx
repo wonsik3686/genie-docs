@@ -2,6 +2,11 @@ import NotionPageComponent from '@/components/notion/NotionPageComponent';
 import { Loader2 } from 'lucide-react';
 import { Suspense } from 'react';
 
+/**
+ * Renders the Notion page content within a Suspense component.
+ *
+ * While the NotionPageComponent is being asynchronously loaded, a loading spinner is displayed as a fallback UI.
+ */
 export default function NotionPage() {
   return (
     <Suspense

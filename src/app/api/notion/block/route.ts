@@ -4,6 +4,16 @@ import { GetBlockResponse } from '@notionhq/client/build/src/api-endpoints';
 import { parse } from 'cookie';
 import { NextRequest, NextResponse } from 'next/server';
 
+/**
+ * Handles GET requests to retrieve a block from the Notion API.
+ *
+ * This function extracts the block identifier from the request URL's query parameters and retrieves the Notion API key from the request cookies. It then instantiates a Notion client using the API key and fetches the corresponding block from the Notion API.
+ *
+ * If the blockId parameter is missing, a JSON response with a 400 status code and an appropriate error message is returned. If an error occurs during the retrieval process, a JSON response with a 500 status code is returned instead.
+ *
+ * @param req - The incoming HTTP GET request.
+ * @returns A JSON response containing either the retrieved block data or an error message.
+ */
 export async function GET(req: NextRequest) {
   try {
     const url = new URL(req.url);

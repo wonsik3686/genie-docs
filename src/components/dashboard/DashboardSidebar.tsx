@@ -79,6 +79,13 @@ const etcMenuItems = [
   },
 ];
 
+/**
+ * Renders the dashboard sidebar.
+ *
+ * This component displays a collapsible sidebar for dashboard navigation. It organizes links into sections for documents, AI tools, and additional menu items, and supports nested, collapsible menus for Notion pages with tooltips for enhanced usability. The sidebar's open state is managed through local state and context, allowing users to toggle its visibility.
+ *
+ * @returns A JSX element representing the dashboard sidebar.
+ */
 export function DashboardSidebar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const { setOpen } = useSidebar();

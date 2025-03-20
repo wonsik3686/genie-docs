@@ -3,6 +3,17 @@ import { ListBlockChildrenResponse } from '@notionhq/client/build/src/api-endpoi
 import { parse } from 'cookie';
 import { NextRequest, NextResponse } from 'next/server';
 
+/**
+ * Handles a GET request to fetch the children blocks of a Notion page.
+ *
+ * Extracts the Notion API key from the request cookies and the page identifier from the query parameters.
+ * If the page identifier is missing, it returns a 400 JSON response. Upon a valid request, it fetches the children
+ * blocks from the specified Notion page via the Notion client. If an error occurs during the Notion API call,
+ * it returns a 500 JSON response with the error details.
+ *
+ * @param req - The incoming Next.js request containing the query parameters and cookies.
+ * @returns A JSON response containing the fetched block children or an error message.
+ */
 export async function GET(req: NextRequest) {
   try {
     const url = new URL(req.url);

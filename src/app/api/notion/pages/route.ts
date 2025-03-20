@@ -12,6 +12,18 @@ import {
 import { parse } from 'cookie';
 import { NextRequest, NextResponse } from 'next/server';
 
+/**
+ * Handles GET requests to retrieve a Notion page and its child pages recursively.
+ *
+ * This function obtains the Notion API key from the request cookies and extracts the parent page ID from the URL
+ * search parameters. It then retrieves the page details using the Notion API—attempting to determine the page title
+ * from either the "Name" or "title" property and defaulting to "제목 없음" if no valid title is found. After setting 
+ * the main page details, it recursively fetches child pages and returns a JSON response containing both the structured 
+ * page object and a flat list of pages.
+ *
+ * @param req - The incoming HTTP request.
+ * @returns A JSON response with the page details and list of pages; returns status 400 if the parent page ID is missing and status 500 if an error occurs during retrieval.
+ */
 export async function GET(req: NextRequest) {
   try {
     const cookies = parse(req.headers.get('cookie') || '');
@@ -76,6 +88,18 @@ export async function GET(req: NextRequest) {
   }
 }
 
+/**
+ * Recursively retrieves child pages for the specified page using the Notion API.
+ *
+ * This function fetches the child blocks of the given page ID and processes each block that contains a page.
+ * When a child page is identified, its title and ID are added to the provided list and its own children are retrieved recursively.
+ * Blocks without a child page are skipped.
+ *
+ * @param pageId - The ID of the page for which to fetch child pages.
+ * @param list - An array that accumulates page information during the recursive traversal.
+ *
+ * @returns A promise that resolves to an array of child page objects, each including a page title, page ID, and an array of its child pages.
+ */
 async function getChildPagesRecursive(
   pageId: string,
   list: any[],

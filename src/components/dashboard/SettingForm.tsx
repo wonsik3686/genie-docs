@@ -20,6 +20,16 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
+/**
+ * Renders a form for updating API key settings for Notion and OpenAI.
+ *
+ * The component initializes user settings on mount and synchronizes its form state with the current settings
+ * from a global store using custom hooks. It leverages react-hook-form with a Zod schema for input validation,
+ * detects unsaved changes by comparing form values with stored settings, and attempts to update the settings
+ * on form submission. If an error occurs during submission, an error message is displayed.
+ *
+ * @returns The JSX element representing the settings form.
+ */
 export default function SettingForm() {
   useInitializeSettings();
   const {

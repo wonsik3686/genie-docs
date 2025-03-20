@@ -53,7 +53,12 @@ export const useSettingStore = create<SettingState & SettingActions>()(
   )
 );
 
-// 쿠키에서 값을 읽어와 상태를 설정 (hydration mismatch 발생 시 사용)
+/**
+ * Initializes application settings by hydrating API keys from cookies to handle potential hydration mismatches.
+ *
+ * This hook retrieves the `notionApiKey` and `openAiApiKey` from cookies (defaulting to empty strings if absent)
+ * and updates the Zustand store with these values on component mount.
+ */
 export function useInitializeSettings() {
   const setNotionApiKey = useSettingStore((state) => state.setNotionApiKey);
   const setOpenAiApiKey = useSettingStore((state) => state.setOpenAiApiKey);
