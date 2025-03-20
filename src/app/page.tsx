@@ -23,6 +23,18 @@ const features = [
   },
 ];
 
+/**
+ * Renders the homepage with interactive features for AI-assisted document management.
+ *
+ * This React component displays a visually engaging layout that includes a 3D scene, an animated
+ * introduction with a title, description, and a button that smoothly scrolls to the feature cards section.
+ * The feature cards highlight the application's core functionalities with fade-in and slide-up animations.
+ * Additionally, a guided setup section provides step-by-step instructions for connecting Notion, entering a page ID,
+ * and configuring the OpenAI API key, along with a footer linking to the project's GitHub repository.
+ *
+ * The internally defined smooth scroll function adjusts for a fixed header offset to ensure the feature cards
+ * are positioned correctly in the viewport.
+ */
 export default function Home() {
   const handleClickLookOver = () => {
     const element = document.getElementById('feature-cards');
