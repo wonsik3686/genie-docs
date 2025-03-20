@@ -1,50 +1,98 @@
+'use client';
+
 import MainScene from '@/components/three/MainScene';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-  BotIcon,
-  FastForwardIcon,
-  GithubIcon,
-  NotepadTextIcon,
-  TargetIcon,
-} from 'lucide-react';
+import { GithubIcon } from 'lucide-react';
+import { motion } from 'motion/react';
 import Link from 'next/link';
 
+const features = [
+  {
+    title: '🔗 노션 문서 연동',
+    description: '모든 문서를 한 곳에서 관리하세요.',
+  },
+  { title: '✍️ AI 문서 작성', description: 'AI가 자동으로 문서를 생성합니다.' },
+  {
+    title: '⚡ 반복 업무 자동화',
+    description: '매주 정리된 보고서를 자동 생성하세요.',
+  },
+  {
+    title: '🎯 맞춤 설정',
+    description: '당신에게 맞는 문서 환경을 설정하세요.',
+  },
+];
+
 export default function Home() {
+  const handleClickLookOver = () => {
+    const element = document.getElementById('feature-cards');
+    if (element) {
+      const headerOffset = 80; // 헤더의 높이만큼 오프셋 추가
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition =
+        elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-16 p-8 pb-20 sm:p-20">
       <MainScene />
-      <main className="flex flex-col items-center justify-center gap-8">
-        <div className="flex flex-col items-center justify-center gap-2 text-center">
-          <span className="break-words break-keep p-4 text-center text-2xl font-medium">
-            반복 업무는 Genie Docs 에게, 더 중요한 일에 집중하세요
-          </span>
-        </div>
-        <div className="feature-cards grid grid-cols-1 gap-4 break-keep sm:grid-cols-2 lg:grid-cols-4">
-          <Card className="flex flex-col items-center justify-center gap-2 p-10">
-            <NotepadTextIcon />
-            <h3>노션 문서 연동</h3>
-            <p>노션과 연결하여 모든 문서를 한 곳에서 관리하세요.</p>
-          </Card>
-          <Card className="flex flex-col items-center justify-center gap-2 p-10">
-            <BotIcon />
-            <h3>AI 문서 작성</h3>
-            <p>AI가 문서를 자동 생성하고, 스타일을 맞춰줍니다.</p>
-          </Card>
-          <Card className="flex flex-col items-center justify-center gap-2 p-10">
-            <FastForwardIcon />
-            <h3>반복 업무 자동화</h3>
-            <p>규칙을 설정하면 매주 정리된 보고서를 자동으로 생성해요.</p>
-          </Card>
-          <Card className="flex flex-col items-center justify-center gap-2 p-10">
-            <TargetIcon name="target" />
-            <h3>맞춤형 설정</h3>
-            <p>당신에게 꼭 맞는 문서 환경을 설정하세요.</p>
-          </Card>
+      <main className="flex flex-col items-center justify-center gap-8 break-keep">
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          className="mb-10 flex flex-col items-center justify-center py-20 text-center"
+        >
+          <h1 className="text-4xl font-bold">
+            AI와 함께 더 스마트한 문서 관리
+          </h1>
+          <p className="mt-4 text-lg text-gray-600">
+            반복적인 문서 작업은 Genie Docs 에게 맡기고 더 중요한 일에
+            집중하세요.
+          </p>
+          <motion.div
+            animate={{ scale: [1, 1.05, 1] }}
+            transition={{ repeat: Infinity, duration: 1.5, ease: 'easeInOut' }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            className="mt-6"
+          >
+            <Button
+              className="w-40 rounded-lg bg-accent-point text-white shadow-sm shadow-accent-point hover:bg-accent-point/80 dark:text-white"
+              variant="default"
+              onClick={handleClickLookOver}
+            >
+              살펴보기
+            </Button>
+          </motion.div>
+        </motion.section>
+        <div
+          id="feature-cards"
+          className="feature-cards mb-20 grid grid-cols-1 gap-4 break-keep sm:grid-cols-2 lg:grid-cols-4"
+        >
+          {features.map((feature, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
+              viewport={{ once: false }}
+              className="rounded-lg bg-secondary p-6 shadow-md"
+            >
+              <h3 className="text-xl font-bold">{feature.title}</h3>
+              <p className="mt-2">{feature.description}</p>
+            </motion.div>
+          ))}
         </div>
         <Card className="usage-guide flex w-full flex-col items-center justify-center gap-4 break-keep p-8">
           <h2 className="text-xl font-bold">✨ 3단계로 시작하기!</h2>
-          <Card className="w-full max-w-2xl">
+          <Card className="w-full max-w-2xl bg-secondary">
             <CardHeader>
               <CardTitle className="text-xl font-bold">
                 1. 노션 계정을 연결하세요
@@ -82,7 +130,7 @@ export default function Home() {
               </p>
             </CardContent>
           </Card>
-          <Card className="w-full max-w-2xl">
+          <Card className="w-full max-w-2xl bg-secondary">
             <CardHeader>
               <CardTitle className="text-xl font-bold">
                 2. 연동할 Notion 페이지의 페이지 ID 를 입력하세요
@@ -110,7 +158,7 @@ export default function Home() {
               <p>페이지 ID를 입력하고 페이지에 입력해 주세요.</p>
             </CardContent>
           </Card>
-          <Card className="w-full max-w-2xl">
+          <Card className="w-full max-w-2xl bg-secondary">
             <CardHeader>
               <CardTitle className="text-xl font-bold">
                 3. OpenAI API 키를 입력하세요
@@ -136,13 +184,20 @@ export default function Home() {
               </p>
             </CardContent>
           </Card>
-          <Button
-            className="mt-4 w-52 bg-accent-light text-lg-bold hover:bg-accent-light/80 dark:bg-accent-dark dark:hover:bg-accent-dark/80	"
-            variant="default"
-            asChild
+          <motion.div
+            animate={{ scale: [1, 1.05, 1] }}
+            transition={{ repeat: Infinity, duration: 1.5, ease: 'easeInOut' }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
           >
-            <Link href="/dashboard/settings">설정 시작하기</Link>
-          </Button>
+            <Button
+              className="mt-4 w-52 rounded-lg bg-accent-point text-white shadow-sm shadow-accent-point hover:bg-accent-point/80 dark:text-white"
+              variant="default"
+              asChild
+            >
+              <Link href="/dashboard/settings">설정 시작하기</Link>
+            </Button>
+          </motion.div>
         </Card>
       </main>
       <footer className="flex flex-wrap items-center justify-center gap-6">
