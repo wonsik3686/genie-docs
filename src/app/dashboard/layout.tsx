@@ -1,5 +1,6 @@
 import { DashboardSidebar } from '@/components/dashboard/DashboardSidebar';
-import { SidebarProvider } from '@/components/ui/sidebar';
+import { SettingAlarmDialog } from '@/components/dashboard/SettingAlarmDialog';
+import { SidebarTrigger } from '@/components/ui/sidebar';
 import React from 'react';
 
 export default function DashboardLayout({
@@ -9,10 +10,10 @@ export default function DashboardLayout({
 }) {
   return (
     <div className="flex w-full">
-      <SidebarProvider>
-        <DashboardSidebar />
-        <div className="w-full p-8 pt-20">{children}</div>
-      </SidebarProvider>
+      <SidebarTrigger />
+      <DashboardSidebar />
+      <div className="w-full pr-4 pt-20 md:pr-6">{children}</div>
+      <SettingAlarmDialog />
     </div>
   );
 }

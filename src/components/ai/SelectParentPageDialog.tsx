@@ -23,7 +23,12 @@ function SelectParentPageDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">저장될 대상 페이지 선택</Button>
+        <Button
+          className="w-full bg-secondary hover:bg-secondary/80 active:bg-secondary/60 md:w-40"
+          variant="outline"
+        >
+          저장될 대상 페이지 선택
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -32,7 +37,7 @@ function SelectParentPageDialog() {
             AI 응답이 저장될 페이지를 선택합니다.
           </DialogDescription>
         </DialogHeader>
-        <ScrollArea className="h-[60vh]">
+        <ScrollArea className="h-[60vh] md:h-[70vh]">
           <div className="flex flex-col gap-2">
             {notionPageList.map((page) => (
               <div className="flex items-center space-x-2" key={page.pageId}>

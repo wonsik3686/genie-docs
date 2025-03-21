@@ -164,13 +164,19 @@ function ReadmeTemplateForm() {
               </FormItem>
             )}
           />
-          <Button
-            className="w-full bg-accent-point hover:bg-accent-point/80"
-            type="submit"
-            disabled={isPending}
-          >
-            {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : '생성'}
-          </Button>
+          <div className="flex justify-end">
+            <Button
+              className="h-10 w-40 bg-accent-point hover:bg-accent-point/80 active:bg-accent-point/60 md:w-80"
+              type="submit"
+              disabled={isPending}
+            >
+              {isPending ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                '생성'
+              )}
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

@@ -62,7 +62,7 @@ function OverviewTemplateForm() {
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="mb-10 flex flex-col gap-4">
       <Form {...form}>
         <form onSubmit={handleSubmit} className="space-y-8">
           <Card className="flex w-full flex-col gap-4">
@@ -164,13 +164,19 @@ function OverviewTemplateForm() {
               </FormItem>
             )}
           />
-          <Button
-            className="w-full bg-accent-point hover:bg-accent-point/80"
-            type="submit"
-            disabled={isPending}
-          >
-            {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : '생성'}
-          </Button>
+          <div className="flex justify-end">
+            <Button
+              className="h-10 w-40 bg-accent-point hover:bg-accent-point/80 active:bg-accent-point/60 md:w-80"
+              type="submit"
+              disabled={isPending}
+            >
+              {isPending ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                '생성'
+              )}
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

@@ -42,7 +42,7 @@ function NotionPageComponent() {
     );
 
   return (
-    <div className="flex h-full w-full flex-col gap-4 rounded-md bg-secondary/50 p-4">
+    <div className="flex h-full w-full flex-col gap-4 rounded-md bg-secondary/50 p-0 sm:p-4 md:p-6">
       {page && <NotionPageMeta notionPageMeta={page as PageObjectResponse} />}
       {blocks && <NotionPageContent notionPageContent={blocks} />}
     </div>
