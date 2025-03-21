@@ -40,9 +40,9 @@ export default function Home() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-16 p-8 pb-20 sm:p-20">
+    <div className="flex flex-col gap-16 p-8 pb-20 sm:pt-36 xs:pt-20">
       <MainScene />
-      <main className="flex flex-col items-center justify-center gap-8 break-keep">
+      <main className="flex flex-col gap-8 break-keep">
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -90,7 +90,7 @@ export default function Home() {
             </motion.div>
           ))}
         </div>
-        <Card className="usage-guide flex w-full flex-col items-center justify-center gap-4 break-keep p-8">
+        <Card className="usage-guide flex w-full flex-col items-center justify-center gap-4 break-keep p-8 xs:px-2 xs:py-6">
           <h2 className="text-xl font-bold">✨ 3단계로 시작하기!</h2>
           <Card className="w-full max-w-2xl bg-secondary">
             <CardHeader>
@@ -111,7 +111,7 @@ export default function Home() {
                   Notion 통합 대시보드
                 </Link>
                 {'  '}에 접속 후{'  '}
-                <span className="rounded-md p-1 font-bold text-accent-point outline outline-accent-point">
+                <span className="rounded-md border border-accent-point p-1 font-bold text-accent-point">
                   + New integration
                 </span>{' '}
                 버튼을 클릭하세요.
@@ -149,9 +149,9 @@ export default function Home() {
                 입니다.
               </p>
               <p>이 페이지의 마지막에 있는 32자리 문자열이 페이지 ID 입니다.</p>
-              <p>
-                (예) 복사된 URL이
-                https://www.notion.so/BookNotion-3956b991ea4a4b90b893f3abd1ed054b라면,
+              <p className="break-all">
+                (예) 복사된 URL이 https://www.notion.so/
+                BookNotion-3956b991ea4a4b90b893f3abd1ed054b라면,
                 <br />
                 페이지 ID는 3956b991ea4a4b90b893f3abd1ed054b 입니다.
               </p>
