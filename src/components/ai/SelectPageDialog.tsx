@@ -22,7 +22,12 @@ function SelectPageDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">페이지 선택</Button>
+        <Button
+          variant="outline"
+          className="bg-secondary hover:bg-secondary/80 active:bg-secondary/60"
+        >
+          페이지 선택
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -32,9 +37,12 @@ function SelectPageDialog() {
           </DialogDescription>
         </DialogHeader>
         <ScrollArea className="h-[60vh]">
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 md:gap-1">
             {notionPageList.map((page) => (
-              <div className="flex items-center space-x-2" key={page.pageId}>
+              <div
+                className="flex items-center space-x-2 rounded-lg px-2 py-3 hover:bg-secondary/50 active:bg-secondary/30"
+                key={page.pageId}
+              >
                 <Checkbox
                   id={page.pageId}
                   checked={selectedPages.some((p) => p.pageId === page.pageId)}
@@ -50,7 +58,7 @@ function SelectPageDialog() {
                 />
                 <label
                   htmlFor={page.pageId}
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  className="h-full w-full text-lg-regular leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
                   {page.pageTitle}
                 </label>

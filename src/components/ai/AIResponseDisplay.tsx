@@ -41,10 +41,10 @@ function AIResponseDisplay() {
         <CardContent>
           <ReactMarkdown>{aiResponse?.content}</ReactMarkdown>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="flex flex-col gap-3 md:flex-row md:justify-end	">
           <SelectParentPageDialog />
           <Button
-            className="w-full"
+            className="w-full md:w-40"
             onClick={handleSaveAIResponse}
             disabled={isPending}
           >
