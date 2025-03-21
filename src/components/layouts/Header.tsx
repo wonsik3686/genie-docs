@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { SidebarTrigger } from '../ui/sidebar';
 
 function Header() {
   const { theme, setTheme } = useTheme();
@@ -27,6 +28,7 @@ function Header() {
   return (
     <header className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between bg-background p-4 dark:bg-background">
       <div className="flex items-center space-x-4">
+        {pathname.includes('/dashboard') && <SidebarTrigger />}
         <Button variant="ghost" asChild>
           <Link href="/">
             <span className="font-mono text-xl font-bold text-brand-dark dark:text-brand-light">
