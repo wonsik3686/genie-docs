@@ -40,7 +40,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col gap-16 p-8 pb-20 sm:pt-36 xs:pt-20">
+    <div className="flex w-full flex-col items-center gap-16 p-8 pb-20 sm:pt-36 xs:pt-20">
       <MainScene />
       <main className="flex flex-col gap-8 break-keep">
         <motion.section
