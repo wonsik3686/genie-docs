@@ -40,13 +40,6 @@ export function SettingAlarmDialog() {
           <AlertDialogTitle>설정이 필요합니다</AlertDialogTitle>
           <AlertDialogDescription>
             설정 값이 없습니다. 설정 페이지로 이동하시겠습니까?
-            <br />
-            <br />
-            {notionPageId}
-            <br />
-            {openAiApiKey}
-            <br />
-            {notionApiKey}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
