@@ -14,11 +14,11 @@ function Header() {
   const pathname = usePathname();
   const menuItems = [
     {
-      label: 'Dashboard',
+      label: '대시보드',
       href: '/dashboard',
     },
     {
-      label: 'Settings',
+      label: '설정',
       href: '/settings',
     },
   ];

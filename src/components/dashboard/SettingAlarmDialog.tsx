@@ -11,17 +11,23 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { useSettingStore } from '@/store/settingStore';
+import Cookies from 'js-cookie';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export function SettingAlarmDialog() {
   const notionPageId = useSettingStore((state) => state.notionPageId);
-  const openAiApiKey = useSettingStore((state) => state.openAiApiKey);
-  const notionApiKey = useSettingStore((state) => state.notionApiKey);
+  const openAiApiKey = Cookies.get('openAiApiKey');
+  const notionApiKey = Cookies.get('notionApiKey');
 
-  const [hasSettings, setHasSettings] = useState(
-    notionPageId !== '' && openAiApiKey !== '' && notionApiKey !== ''
-  );
+  const [hasSettings, setHasSettings] = useState(true);
+
+  useEffect(() => {
+    setHasSettings(
+      notionPageId !== '' && openAiApiKey !== '' && notionApiKey !== ''
+    );
+  }, [notionPageId, openAiApiKey, notionApiKey]);
+
   return (
     <AlertDialog
       open={!hasSettings}
@@ -34,6 +40,13 @@ export function SettingAlarmDialog() {
           <AlertDialogTitle>설정이 필요합니다</AlertDialogTitle>
           <AlertDialogDescription>
             설정 값이 없습니다. 설정 페이지로 이동하시겠습니까?
+            <br />
+            <br />
+            {notionPageId}
+            <br />
+            {openAiApiKey}
+            <br />
+            {notionApiKey}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
