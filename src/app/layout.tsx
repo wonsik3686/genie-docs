@@ -1,6 +1,7 @@
 import Header from '@/components/layouts/Header';
 import { QueryProvider } from '@/components/providers/QueryProvider';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
+import { SidebarProvider } from '@/components/ui/sidebar';
 import { Toaster } from '@/components/ui/sonner';
 import type { Metadata } from 'next';
 import './globals.css';
@@ -19,9 +20,11 @@ export default function RootLayout({
       <body className={'antialiased'}>
         <QueryProvider>
           <ThemeProvider>
-            <Header />
-            {children}
-            <Toaster />
+            <SidebarProvider>
+              <Header />
+              {children}
+              <Toaster />
+            </SidebarProvider>
           </ThemeProvider>
         </QueryProvider>
       </body>

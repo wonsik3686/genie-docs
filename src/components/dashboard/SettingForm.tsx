@@ -15,6 +15,7 @@ import {
   settingSchema,
   type SettingSchemaType,
 } from '@/constants/formSchemas/Setting.schema';
+import { cn } from '@/lib/utils';
 import { useInitializeSettings, useSettingStore } from '@/store/settingStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
@@ -72,7 +73,7 @@ export default function SettingForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
         <FormField
           control={form.control}
           name="notionApiKey"
@@ -133,11 +134,12 @@ export default function SettingForm() {
         <div className="flex w-full flex-col items-center gap-2">
           <div className="flex gap-2">
             <Button
-              className={
+              className={cn(
                 hasUnsavedChanges
                   ? 'bg-accent-light hover:bg-accent-point'
-                  : 'bg-accent-dark hover:bg-accent-point'
-              }
+                  : 'bg-accent-dark hover:bg-accent-point',
+                'w-60 xs:h-10 xs:w-72'
+              )}
               type="submit"
               disabled={!hasUnsavedChanges}
             >
