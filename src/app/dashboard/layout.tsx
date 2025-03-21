@@ -12,7 +12,7 @@ export default function DashboardLayout({
     <div className="flex w-full">
       <SidebarTrigger />
       <DashboardSidebar />
-      <div className="w-full px-2 pt-20 md:pr-6">{children}</div>
+      <div className="w-full pr-4 pt-20 md:pr-6">{children}</div>
       <SettingAlarmDialog />
     </div>
   );
