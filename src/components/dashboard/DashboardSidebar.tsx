@@ -24,6 +24,7 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
+  SidebarRail,
   SidebarSeparator,
   useSidebar,
 } from '@/components/ui/sidebar';
@@ -152,7 +153,11 @@ export function DashboardSidebar() {
   }
 
   return (
-    <Sidebar className="mt-16 w-64 pr-0" variant="floating" collapsible="icon">
+    <Sidebar
+      className="mt-16 h-[calc(100svh-theme(spacing.16))] w-64 pr-0"
+      variant="floating"
+      collapsible="icon"
+    >
       <TooltipProvider>
         <Button
           onClick={handleToggleSidebar}
@@ -184,13 +189,16 @@ export function DashboardSidebar() {
                             className="hover:bg-secondary"
                             asChild
                           >
-                            <Button variant="ghost">
+                            <button
+                              type="button"
+                              className="flex w-full items-center justify-between"
+                            >
                               <BookOpen />
                               <span className="w-full truncate">
                                 {item.title}
                               </span>
                               <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
-                            </Button>
+                            </button>
                           </SidebarMenuButton>
                         </CollapsibleTrigger>
                         <CollapsibleContent>
@@ -308,6 +316,7 @@ export function DashboardSidebar() {
           </ScrollArea>
         </SidebarContent>
       </TooltipProvider>
+      <SidebarRail />
     </Sidebar>
   );
 }
