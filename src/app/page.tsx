@@ -195,7 +195,7 @@ export default function Home() {
               variant="default"
               asChild
             >
-              <Link href="/dashboard/settings">설정 시작하기</Link>
+              <Link href="/settings">설정 시작하기</Link>
             </Button>
           </motion.div>
         </Card>

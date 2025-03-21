@@ -5,9 +5,9 @@ import { useTheme } from 'next-themes';
 import { useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
+import { SidebarTrigger } from '@/components/ui/sidebar';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { SidebarTrigger } from '../ui/sidebar';
 
 function Header() {
   const { theme, setTheme } = useTheme();
@@ -16,6 +16,10 @@ function Header() {
     {
       label: 'Dashboard',
       href: '/dashboard',
+    },
+    {
+      label: 'Settings',
+      href: '/settings',
     },
   ];
 
@@ -31,12 +35,12 @@ function Header() {
         {pathname.includes('/dashboard') && <SidebarTrigger />}
         <Button variant="ghost" asChild>
           <Link href="/">
-            <span className="font-mono text-xl font-bold text-brand-dark dark:text-brand-light">
+            <span className="xs:text-md font-mono text-xl font-bold text-brand-dark dark:text-brand-light xs:text-md-bold">
               Genie Docs
             </span>
           </Link>
         </Button>
-        <nav className="space-x-4">
+        <nav className="space-x-4 xs:space-x-0">
           {menuItems.map((item) => (
             <Button
               className={`${pathname === item.href ? 'font-bold' : 'font-semibold text-gray-600 dark:text-gray-300'}`}
@@ -50,12 +54,6 @@ function Header() {
         </nav>
       </div>
       <div className="flex items-center space-x-4">
-        {/* <Button variant="outline" asChild>
-          <Link href="/auth/signin">SignIn</Link>
-        </Button>
-        <Button variant="outline" asChild>
-          <Link href="/auth/signup">SignUp</Link>
-        </Button> */}
         <Button
           variant="outline"
           size="icon"

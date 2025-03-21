@@ -10,7 +10,6 @@ import {
   ChevronsRightIcon,
   CodeIcon,
   FileIcon,
-  Settings,
 } from 'lucide-react';
 
 import {
@@ -73,13 +72,8 @@ const documentsMenuItems = [
 //   },
 // ];
 
-const etcMenuItems = [
-  {
-    title: '설정',
-    url: '/dashboard/settings',
-    icon: Settings,
-  },
-];
+const etcMenuItems: { title: string; url: string; icon: React.ElementType }[] =
+  [];
 
 export function DashboardSidebar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -276,7 +270,6 @@ export function DashboardSidebar() {
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton asChild>
                         <Link href={item.url}>
-                          <item.icon />
                           <span>{item.title}</span>
                         </Link>
                       </SidebarMenuButton>

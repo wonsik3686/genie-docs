@@ -1,4 +1,5 @@
 import { DashboardSidebar } from '@/components/dashboard/DashboardSidebar';
+import { SettingAlarmDialog } from '@/components/dashboard/SettingAlarmDialog';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import React from 'react';
 
@@ -12,6 +13,7 @@ export default function DashboardLayout({
       <SidebarTrigger />
       <DashboardSidebar />
       <div className="w-full p-8 pt-20">{children}</div>
+      <SettingAlarmDialog />
     </div>
   );
 }

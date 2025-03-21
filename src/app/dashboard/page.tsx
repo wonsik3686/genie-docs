@@ -1,5 +1,4 @@
 import { DashboardSidebar } from '@/components/dashboard/DashboardSidebar';
-
 export default function Dashboard() {
   return (
     <div className="flex w-full">
