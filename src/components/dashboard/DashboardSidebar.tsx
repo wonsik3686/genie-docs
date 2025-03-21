@@ -22,6 +22,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
+  SidebarMenuSubButton,
   SidebarMenuSubItem,
   SidebarSeparator,
   useSidebar,
@@ -116,16 +117,21 @@ export function DashboardSidebar() {
             <Tooltip>
               <TooltipTrigger>
                 <CollapsibleTrigger asChild>
-                  <SidebarMenuButton className="w-40" asChild>
+                  <SidebarMenuButton
+                    className="w-40 hover:bg-secondary"
+                    asChild
+                  >
                     <Link
                       className="flex w-full items-center justify-between"
                       href={`/dashboard/notion/page?pageId=${page.pageId}`}
                     >
                       <FileIcon />
                       <span className="w-full truncate">{page.pageTitle}</span>
-                      <ChevronDown
-                        className={`ml-auto transition-transform group-data-[state=open]/collapsible${page.pageId}:rotate-90`}
-                      />
+                      {page.children && page.children.length > 0 && (
+                        <ChevronDown
+                          className={`ml-auto transition-transform group-data-[state=open]/collapsible${page.pageId}:rotate-90`}
+                        />
+                      )}
                     </Link>
                   </SidebarMenuButton>
                 </CollapsibleTrigger>
@@ -153,7 +159,7 @@ export function DashboardSidebar() {
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           variant="ghost"
-          className="ml-1 mt-3 h-10 w-10 rounded-full"
+          className="ml-1 mt-3 hidden h-10 w-10 rounded-full md:block"
         >
           {isSidebarOpen ? (
             <ChevronsLeftIcon className="h-4 w-4" />
@@ -174,7 +180,10 @@ export function DashboardSidebar() {
                     {documentsMenuItems.map((item) => (
                       <SidebarMenuItem key={item.title}>
                         <CollapsibleTrigger asChild>
-                          <SidebarMenuButton asChild>
+                          <SidebarMenuButton
+                            className="hover:bg-secondary"
+                            asChild
+                          >
                             <Button variant="ghost">
                               <BookOpen />
                               <span className="w-full truncate">
@@ -212,7 +221,10 @@ export function DashboardSidebar() {
                   ))} */}
                     <SidebarMenuItem>
                       <CollapsibleTrigger asChild>
-                        <SidebarMenuButton asChild>
+                        <SidebarMenuButton
+                          className="hover:bg-secondary"
+                          asChild
+                        >
                           <Link href="/dashboard/ai">
                             <Brain />
                             <span>AI</span>
@@ -223,37 +235,52 @@ export function DashboardSidebar() {
                       <CollapsibleContent>
                         <SidebarMenuSub>
                           <SidebarMenuSubItem>
-                            <Link
-                              className="flex items-center gap-2"
-                              href="/dashboard/ai/templates/overview"
+                            <SidebarMenuSubButton
+                              className="hover:bg-secondary"
+                              asChild
                             >
-                              <BookOpenIcon className="h-4 w-4" />
-                              <span className="w-full truncate">
-                                프로젝트 개요 문서 생성
-                              </span>
-                            </Link>
+                              <Link
+                                className="flex items-center gap-2"
+                                href="/dashboard/ai/templates/overview"
+                              >
+                                <BookOpenIcon className="h-4 w-4" />
+                                <span className="w-full truncate">
+                                  프로젝트 개요 문서 생성
+                                </span>
+                              </Link>
+                            </SidebarMenuSubButton>
                           </SidebarMenuSubItem>
                           <SidebarMenuSubItem>
-                            <Link
-                              className="flex items-center gap-2"
-                              href="/dashboard/ai/templates/readme"
+                            <SidebarMenuSubButton
+                              className="hover:bg-secondary"
+                              asChild
                             >
-                              <FileIcon className="h-4 w-4" />
-                              <span className="w-full truncate">
-                                README 문서 생성
-                              </span>
-                            </Link>
+                              <Link
+                                className="flex items-center gap-2"
+                                href="/dashboard/ai/templates/readme"
+                              >
+                                <FileIcon className="h-4 w-4" />
+                                <span className="w-full truncate">
+                                  README 문서 생성
+                                </span>
+                              </Link>
+                            </SidebarMenuSubButton>
                           </SidebarMenuSubItem>
                           <SidebarMenuSubItem>
-                            <Link
-                              className="flex items-center gap-2"
-                              href="/dashboard/ai/templates/api"
+                            <SidebarMenuSubButton
+                              className="hover:bg-secondary"
+                              asChild
                             >
-                              <CodeIcon className="h-4 w-4" />
-                              <span className="w-full truncate">
-                                API 문서 생성
-                              </span>
-                            </Link>
+                              <Link
+                                className="flex items-center gap-2"
+                                href="/dashboard/ai/templates/api"
+                              >
+                                <CodeIcon className="h-4 w-4" />
+                                <span className="w-full truncate">
+                                  API 문서 생성
+                                </span>
+                              </Link>
+                            </SidebarMenuSubButton>
                           </SidebarMenuSubItem>
                         </SidebarMenuSub>
                       </CollapsibleContent>

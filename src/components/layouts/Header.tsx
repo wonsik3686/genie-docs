@@ -32,7 +32,9 @@ function Header() {
   return (
     <header className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between bg-background p-4 dark:bg-background">
       <div className="flex items-center space-x-4">
-        {pathname.includes('/dashboard') && <SidebarTrigger />}
+        {pathname.includes('/dashboard') && (
+          <SidebarTrigger className="md:hidden" />
+        )}
         <Button variant="ghost" asChild>
           <Link href="/">
             <span className="xs:text-md font-mono text-xl font-bold text-brand-dark dark:text-brand-light xs:text-md-bold">
