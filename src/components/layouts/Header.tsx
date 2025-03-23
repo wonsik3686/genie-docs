@@ -1,17 +1,28 @@
 'use client';
 
-import { Moon, Sun } from 'lucide-react';
+import { Menu, Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { SidebarTrigger } from '@/components/ui/sidebar';
+import { useIsMobile } from '@/hooks/shadcn/use-mobile';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import NotionSearchCommand from '../notion/NotionSearchCommand';
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from '../ui/navigation-menu';
 
 function Header() {
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
+  const isMobile = useIsMobile();
   const menuItems = [
     {
       label: '대시보드',
@@ -42,20 +53,48 @@ function Header() {
             </span>
           </Link>
         </Button>
-        <nav className="space-x-4 xs:space-x-0">
-          {menuItems.map((item) => (
-            <Button
-              className={`${pathname === item.href ? 'font-bold' : 'font-semibold text-gray-600 dark:text-gray-300'}`}
-              variant="ghost"
-              asChild
-              key={item.href}
-            >
-              <Link href={item.href}>{item.label}</Link>
-            </Button>
-          ))}
-        </nav>
+        {!isMobile && (
+          <nav className="space-x-4 xs:space-x-0">
+            {menuItems.map((item) => (
+              <Button
+                className={`${pathname === item.href ? 'font-bold' : 'font-semibold text-gray-600 dark:text-gray-300'}`}
+                variant="ghost"
+                asChild
+                key={item.href}
+              >
+                <Link href={item.href}>{item.label}</Link>
+              </Button>
+            ))}
+          </nav>
+        )}
       </div>
-      <div className="flex items-center space-x-4">
+      <div className="absolute right-4 flex items-center space-x-4">
+        {isMobile && (
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>
+                  <Menu className="h-[1.2rem] w-[1.2rem]" />
+                </NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  {menuItems.map((item) => (
+                    <Link key={item.href} href={item.href}>
+                      <NavigationMenuLink asChild>
+                        <Button
+                          variant="ghost"
+                          className="w-full px-10 text-lg-bold"
+                        >
+                          {item.label}
+                        </Button>
+                      </NavigationMenuLink>
+                    </Link>
+                  ))}
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+        )}
+        <NotionSearchCommand />
         <Button
           variant="outline"
           size="icon"
