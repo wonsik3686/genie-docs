@@ -8,6 +8,7 @@ import {
   CommandList,
 } from '@/components/ui/command';
 import { useIsMobile } from '@/hooks/shadcn/use-mobile';
+import useDebounce from '@/hooks/utils/useDebounce';
 import { useNotionSearch } from '@/queries/notion.queries';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -21,6 +22,8 @@ export default function NotionSearchCommand() {
   const router = useRouter();
   const { mutate: searchNotion, data, isError, isPending } = useNotionSearch();
 
+  const debouncedSearchQuery = useDebounce(searchQuery, 300);
+
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
@@ -32,6 +35,12 @@ export default function NotionSearchCommand() {
     document.addEventListener('keydown', down);
     return () => document.removeEventListener('keydown', down);
   }, []);
+
+  useEffect(() => {
+    if (debouncedSearchQuery.trim()) {
+      handleSearch(debouncedSearchQuery);
+    }
+  }, [debouncedSearchQuery]);
 
   const handleSearch = (value: string) => {
     searchNotion({ query: value, filterType: 'page', pageSize: 100 });
@@ -70,7 +79,6 @@ export default function NotionSearchCommand() {
           placeholder="페이지 제목 검색..."
           onValueChange={(value) => {
             setSearchQuery(value);
-            handleSearch(value);
           }}
         />
 
