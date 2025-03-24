@@ -1,24 +1,27 @@
 'use client';
 
-import { File, Search } from 'lucide-react';
-import * as React from 'react';
+import { Loader2, Search } from 'lucide-react';
 
 import {
   CommandDialog,
-  CommandEmpty,
-  CommandGroup,
   CommandInput,
-  CommandItem,
   CommandList,
 } from '@/components/ui/command';
 import { useIsMobile } from '@/hooks/shadcn/use-mobile';
+import { useNotionSearch } from '@/queries/notion.queries';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { Button } from '../ui/button';
 
 export default function NotionSearchCommand() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const isMobile = useIsMobile();
+  const router = useRouter();
+  const { mutate: searchNotion, data, isError, isPending } = useNotionSearch();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
@@ -29,6 +32,10 @@ export default function NotionSearchCommand() {
     document.addEventListener('keydown', down);
     return () => document.removeEventListener('keydown', down);
   }, []);
+
+  const handleSearch = (value: string) => {
+    searchNotion({ query: value, filterType: 'page', pageSize: 100 });
+  };
 
   return (
     <>
@@ -54,16 +61,58 @@ export default function NotionSearchCommand() {
           </p>
         </Button>
       )}
-      <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder="페이지 제목 검색..." />
+      <CommandDialog
+        open={open}
+        onOpenChange={setOpen}
+        commandValue={searchQuery}
+      >
+        <CommandInput
+          placeholder="페이지 제목 검색..."
+          onValueChange={(value) => {
+            setSearchQuery(value);
+            handleSearch(value);
+          }}
+        />
+
         <CommandList>
-          <CommandEmpty>검색 결과가 없습니다.</CommandEmpty>
-          <CommandGroup heading="페이지">
-            <CommandItem>
-              <File />
-              <span>페이지</span>
-            </CommandItem>
-          </CommandGroup>
+          {data?.results.map((result) => {
+            return (
+              <Button
+                key={result.id}
+                variant="ghost"
+                className="w-full justify-start"
+                onClick={() => {
+                  router.push(`/dashboard/notion/page?pageId=${result.id}`);
+                }}
+                asChild
+              >
+                <Link href={`/dashboard/notion/page?pageId=${result.id}`}>
+                  <p className="text-left">
+                    {result.properties?.title.title[0].plain_text}
+                  </p>
+                </Link>
+              </Button>
+            );
+          })}
+          {isPending && (
+            <div className="flex w-full items-center justify-center py-4">
+              <Loader2 className="h-4 w-4 animate-spin" />
+            </div>
+          )}
+          {isError && (
+            <div className="flex w-full items-center justify-center py-4">
+              <p className="text-center text-sm text-muted-foreground">
+                검색 중 오류가 발생했습니다.
+              </p>
+            </div>
+          )}
+          {data?.results.length === 0 && (
+            <div className="flex w-full items-center justify-center py-4">
+              <p className="text-center text-sm text-muted-foreground">
+                검색 결과가 없습니다.
+              </p>
+            </div>
+          )}
         </CommandList>
       </CommandDialog>
     </>

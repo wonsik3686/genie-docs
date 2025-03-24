@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { SidebarTrigger } from '@/components/ui/sidebar';
+import useNotionIntegrationStatus from '@/hooks/notion/useNotionIntegrationStatus';
 import { useIsMobile } from '@/hooks/shadcn/use-mobile';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -23,6 +24,8 @@ function Header() {
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
   const isMobile = useIsMobile();
+  const { isNotionIntegrated } = useNotionIntegrationStatus();
+
   const menuItems = [
     {
       label: '대시보드',
@@ -94,7 +97,7 @@ function Header() {
             </NavigationMenuList>
           </NavigationMenu>
         )}
-        <NotionSearchCommand />
+        {isNotionIntegrated && <NotionSearchCommand />}
         <Button
           variant="outline"
           size="icon"
