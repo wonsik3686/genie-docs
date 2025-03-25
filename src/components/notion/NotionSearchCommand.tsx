@@ -96,7 +96,8 @@ export default function NotionSearchCommand() {
               >
                 <Link href={`/dashboard/notion/page?pageId=${result.id}`}>
                   <p className="text-left">
-                    {result.properties?.title.title[0].plain_text}
+                    {result.properties?.title?.title?.[0]?.plain_text ||
+                      '제목 없음'}
                   </p>
                 </Link>
               </Button>
