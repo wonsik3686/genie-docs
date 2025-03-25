@@ -2,7 +2,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
 import { useNotionStore } from '@/store/notionStore';
-import { NotionPagesResponse } from '@/types/dto/notion.dto.types';
+import {
+  NotionPagesResponse,
+  SearchRequestBody,
+  SearchResponse,
+} from '@/types/dto/notion.dto.types';
 import {
   GetBlockResponse,
   GetPageResponse,
@@ -98,6 +102,27 @@ export function useNotionBlock(blockId: string) {
       if (!response.ok) {
         throw new Error('블록 조회 중 오류가 발생했습니다.');
       }
+      return response.json();
+    },
+  });
+}
+
+// 노션 검색하기
+export function useNotionSearch() {
+  return useMutation<SearchResponse, Error, SearchRequestBody>({
+    mutationFn: async ({ query, filterType, pageSize }: SearchRequestBody) => {
+      const response = await fetch('/api/notion/search', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query, filterType, pageSize }),
+      });
+
+      if (!response.ok) {
+        throw new Error('검색 중 오류가 발생했습니다.');
+      }
+
       return response.json();
     },
   });
