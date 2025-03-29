@@ -88,7 +88,7 @@ function TemplateFormBase<T extends FieldValues>({
           {formFields}
           <div className="flex justify-end">
             <Button
-              className="h-10 w-40 bg-accent-point hover:bg-accent-point/80 active:bg-accent-point/60 md:w-80"
+              className="h-10 w-full bg-accent-point hover:bg-accent-point/80 active:bg-accent-point/60 md:w-60"
               type="submit"
               disabled={isAIPending || isBlocksPending}
             >
