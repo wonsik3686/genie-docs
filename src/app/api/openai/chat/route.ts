@@ -32,10 +32,10 @@ export async function POST(req: NextRequest) {
 
   const templateMessages = {
     'project-overview':
-      'You are a helpful assistant that generates project overview documents.',
-    'api-document': 'You are a helpful assistant that generates API documents.',
-    readme: 'You are a helpful assistant that generates README documents.',
-    custom: 'You are a helpful assistant that generates documents.',
+      ' 너는 프로젝트 개요를 작성하는 전문가이자 어시스턴트야.',
+    'api-document': ' 너는 API 문서를 작성하는 전문가이자 어시스턴트야.',
+    readme: ' 너는 README 문서를 작성하는 전문가이자 어시스턴트야.',
+    custom: ' 너는 문서를 작성하는 전문가이자 어시스턴트야.',
   };
 
   const messageContent =

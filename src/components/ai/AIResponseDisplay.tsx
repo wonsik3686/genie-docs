@@ -33,15 +33,21 @@ function AIResponseDisplay() {
   }
 
   return (
-    <div className="flex flex-col gap-4">
-      <Card>
+    <div className="flex h-full flex-col gap-4">
+      <Card className="bg-secondary/55">
         <CardHeader>
           <CardTitle>{aiResponse?.title}</CardTitle>
         </CardHeader>
+
         <CardContent>
-          <ReactMarkdown>{aiResponse?.content}</ReactMarkdown>
+          <div className="pr-4">
+            <div className="max-w-full whitespace-pre-wrap break-words">
+              <ReactMarkdown>{aiResponse?.content}</ReactMarkdown>
+            </div>
+          </div>
         </CardContent>
-        <CardFooter className="flex flex-col gap-3 md:flex-row md:justify-end	">
+
+        <CardFooter className="flex flex-col gap-3 md:flex-row md:justify-end">
           <SelectParentPageDialog />
           <Button
             className="w-full md:w-40"
