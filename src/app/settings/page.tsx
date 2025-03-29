@@ -1,4 +1,5 @@
 import SettingForm from '@/components/dashboard/SettingForm';
+import { Metadata } from 'next';
 
 export default function SettingsPage() {
   return (
@@ -8,3 +9,13 @@ export default function SettingsPage() {
     </div>
   );
 }
+
+export const metadata: Metadata = {
+  title: '설정 | Genie Docs',
+  description: 'Genie Docs의 API 키 설정 및 기타 환경 설정을 관리하세요.',
+  openGraph: {
+    title: '설정 | Genie Docs',
+    description: 'Genie Docs의 API 키 설정 및 기타 환경 설정을 관리하세요.',
+    type: 'website',
+  },
+};
