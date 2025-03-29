@@ -1,5 +1,6 @@
 import AITemplateSelector from '@/components/ai/AITemplateSelector';
 import StoredAIResponseList from '@/components/ai/StoredAIResponseList';
+import { Metadata } from 'next';
 
 function AiPage() {
   return (
@@ -14,3 +15,13 @@ function AiPage() {
 }
 
 export default AiPage;
+
+export const metadata: Metadata = {
+  title: 'AI 문서 관리 | Genie Docs',
+  description: 'AI로 생성된 문서들을 관리하고 확인하세요.',
+  openGraph: {
+    title: 'AI 문서 관리 | Genie Docs',
+    description: 'AI로 생성된 문서들을 관리하고 확인하세요.',
+    type: 'website',
+  },
+};

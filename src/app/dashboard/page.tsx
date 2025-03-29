@@ -1,7 +1,13 @@
 import IntegrationStatus from '@/components/dashboard/IntegrationStatus';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Metadata } from 'next';
 import Link from 'next/link';
+
+export const metadata: Metadata = {
+  title: '대시보드 | Genie Docs',
+  description: 'Genie Docs 대시보드에서 문서를 관리하세요',
+};
 
 export default function Dashboard() {
   return (
