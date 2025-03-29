@@ -3,10 +3,13 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
+import { useNotionBlocksBatch } from '@/queries/notion.queries';
 import { useAskOpenAI } from '@/queries/openai.queries';
 import { useNotionStore } from '@/store/notionStore';
 import { useInitializeSettings, useSettingStore } from '@/store/settingStore';
 import { AITemplate } from '@/types/openai.types';
+import { getTextFromBlock } from '@/utils/notion.utils';
+import { BlockObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 import { File, Loader2 } from 'lucide-react';
 import { FieldValues, UseFormReturn } from 'react-hook-form';
 import SelectPageDialog from './SelectPageDialog';
@@ -27,16 +30,28 @@ function TemplateFormBase<T extends FieldValues>({
   useInitializeSettings();
   const { selectedPages } = useNotionStore();
   const { openAiApiKey } = useSettingStore();
-  const { mutate: askOpenAI, isPending } = useAskOpenAI();
+  const { mutate: askOpenAI, isPending: isAIPending } = useAskOpenAI();
+
+  // 선택된 페이지들의 블록 데이터를 가져오기
+  const { data: blocksData, isPending: isBlocksPending } = useNotionBlocksBatch(
+    selectedPages.map((page) => page.pageId)
+  );
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // 각 페이지의 블록 내용을 텍스트로 변환
     const selectedPagesString = selectedPages
-      .map((content) => {
-        if (!content.pageContent) return '';
-        return `내용: ${content.pageContent}`;
+      .map((page, index) => {
+        const blocks = blocksData?.[index]?.results || [];
+        const pageContent = blocks
+          .map((block) => getTextFromBlock(block as BlockObjectResponse))
+          .filter((text) => text)
+          .join('\n');
+
+        return `페이지 제목: ${page.pageTitle}\n내용: ${pageContent}`;
       })
-      .join('; ');
+      .join('\n\n');
 
     const formValues = form.getValues();
     const promptWithPages = getPromptTemplate(formValues, selectedPagesString);
@@ -75,9 +90,9 @@ function TemplateFormBase<T extends FieldValues>({
             <Button
               className="h-10 w-40 bg-accent-point hover:bg-accent-point/80 active:bg-accent-point/60 md:w-80"
               type="submit"
-              disabled={isPending}
+              disabled={isAIPending || isBlocksPending}
             >
-              {isPending ? (
+              {isAIPending || isBlocksPending ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
                 '생성'
