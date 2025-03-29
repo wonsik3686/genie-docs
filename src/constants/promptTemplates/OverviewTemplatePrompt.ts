@@ -8,6 +8,23 @@ function OverviewPromptTemplate(
 ) {
   const promptParts: string[] = [];
 
+  promptParts.push(
+    `아래 내용을 기반으로 프로젝트 개요 문서를 작성해줘.
+		문서는 마크다운 형식으로 작성하고, 다음 항목을 포함해줘:
+
+		1. 프로젝트 이름
+		2. 목표 (이 프로젝트를 왜 만들었는지)
+		3. 주요 기능 (기능 항목별 설명 포함)
+		4. 주요 대상 사용자
+		5. 기술 스택 (프론트엔드/백엔드 구분)
+		6. 향후 계획 (확장 가능성이나 업데이트 계획)
+
+		내용은 간결하고 명확하게 써주고, 문서 형식으로 바로 복사해서 사용할 수 있도록 해줘.
+		관련 내용이 없다면 필요한 내용을 적절하게 작성해.
+
+		--- 아래는 참고할 정보야 ---`
+  );
+
   if (projectName.trim()) {
     promptParts.push(`프로젝트 이름은 ${projectName}입니다.`);
   }
@@ -26,7 +43,6 @@ function OverviewPromptTemplate(
   if (relatedInfo.trim()) {
     promptParts.push(`다음은 관련 정보입니다. ${relatedInfo}`);
   }
-  promptParts.push('이 정보를 바탕으로 프로젝트 개요 문서를 작성해 주세요.');
 
   return promptParts.join(' ');
 }
