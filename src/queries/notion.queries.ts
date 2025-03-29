@@ -107,6 +107,22 @@ export function useNotionBlock(blockId: string) {
   });
 }
 
+// 여러 페이지 노션 블록 목록 가져오기
+export function useNotionBlocksBatch(pageIdList: string[]) {
+  return useQuery<ListBlockChildrenResponse[], Error>({
+    queryKey: notionQueryKeys.blocksBatch(pageIdList),
+    queryFn: async () => {
+      const response = await fetch(
+        `/api/notion/blocks/batch?pageIdList=${pageIdList.join(',')}`
+      );
+      if (!response.ok) {
+        throw new Error('블록 조회 중 오류가 발생했습니다.');
+      }
+      return response.json();
+    },
+  });
+}
+
 // 노션 검색하기
 export function useNotionSearch() {
   return useMutation<SearchResponse, Error, SearchRequestBody>({

@@ -5,8 +5,10 @@ function ApiPage() {
   return (
     <>
       <h1 className="text-2xl font-bold">API 문서 생성</h1>
-      <APITemplateForm />
-      <AIResponseDisplay />
+      <div className="grid h-[calc(100vh-10rem)] grid-cols-1 gap-4 md:grid-cols-2">
+        <APITemplateForm />
+        <AIResponseDisplay />
+      </div>
     </>
   );
 }
