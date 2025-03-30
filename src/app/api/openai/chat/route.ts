@@ -3,7 +3,7 @@ import { AIResponse } from '@/types/openai.types';
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
-export const maxDuration = 300;
+export const maxDuration = 100000;
 export const dynamic = 'force-dynamic';
 
 export async function POST(req: NextRequest) {
