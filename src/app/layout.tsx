@@ -4,7 +4,8 @@ import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { Toaster } from '@/components/ui/sonner';
 import type { Metadata } from 'next';
-import './globals.css';
+// import './globals.css';
+import '@/styles/output.css';
 
 export const metadata: Metadata = {
   title: 'Genie Docs - AI 기반 문서 관리 도구',

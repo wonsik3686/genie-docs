@@ -40,11 +40,7 @@ function AIResponseDisplay() {
         </CardHeader>
 
         <CardContent>
-          <div className="pr-4">
-            <div className="max-w-full whitespace-pre-wrap break-words">
-              <ReactMarkdown>{aiResponse?.content}</ReactMarkdown>
-            </div>
-          </div>
+          <ReactMarkdown>{aiResponse?.content}</ReactMarkdown>
         </CardContent>
 
         <CardFooter className="flex flex-col gap-3 md:flex-row md:justify-end">
