@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
 import { useNotionBlocksBatch } from '@/queries/notion.queries';
-import { useAskOpenAI } from '@/queries/openai.queries';
+import { useOpenAIChatGPTStream } from '@/queries/openai.queries';
 import { useNotionStore } from '@/store/notionStore';
 import { useInitializeSettings, useSettingStore } from '@/store/settingStore';
 import { AITemplate } from '@/types/openai.types';
@@ -30,7 +30,9 @@ function TemplateFormBase<T extends FieldValues>({
   useInitializeSettings();
   const { selectedPages } = useNotionStore();
   const { openAiApiKey } = useSettingStore();
-  const { mutate: askOpenAI, isPending: isAIPending } = useAskOpenAI();
+  // const { mutate: askOpenAI, isPending: isAIPending } = useAskOpenAI();
+  const { mutate: askOpenAI, isPending: isAIPending } =
+    useOpenAIChatGPTStream();
 
   // 선택된 페이지들의 블록 데이터를 가져오기
   const { data: blocksData, isPending: isBlocksPending } = useNotionBlocksBatch(

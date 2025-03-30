@@ -10,7 +10,7 @@ const APITemplatePrompt = (
 
   promptParts.push(
     `아래 내용을 기반으로 API 문서를 작성해줘.
-		문서는 마크다운 형식으로 작성하고, 다음 항목을 포함해줘:
+		다음 항목을 포함해줘:
 
 		1. API 명 (기능 설명과 함께 제목 형태로)
 		2. Endpoint
