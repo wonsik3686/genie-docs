@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
     'You are a helpful assistant.';
 
   try {
-    const response = await openai.chat.completions.create({
+    const stream = await openai.chat.completions.create({
       model: 'gpt-4-turbo',
       messages: [
         {
@@ -53,38 +53,60 @@ export async function POST(req: NextRequest) {
         },
         { role: 'user', content: prompt },
       ],
+      stream: true,
       max_tokens: 4000,
       temperature: 0.7,
     });
 
-    const aiResponse: AIResponse = {
-      id: response.id,
-      template: template,
-      title: template,
-      content: response.choices[0].message.content?.trim() || '',
-      createdAt: new Date().toISOString(),
-    };
+    // SSE 스트림 설정
+    const encoder = new TextEncoder();
+    const customStream = new ReadableStream({
+      async start(controller) {
+        let fullContent = '';
 
-    return NextResponse.json({ success: true, aiResponse });
+        try {
+          for await (const chunk of stream) {
+            const content = chunk.choices[0]?.delta?.content || '';
+            fullContent += content;
+
+            // 클라이언트에 청크 전송
+            controller.enqueue(
+              encoder.encode(`data: ${JSON.stringify({ content })}\n\n`)
+            );
+          }
+
+          // 스트림 완료 시 전체 응답 전송
+          const aiResponse: AIResponse = {
+            id: crypto.randomUUID(),
+            template,
+            title: template,
+            content: fullContent,
+            createdAt: new Date().toISOString(),
+          };
+
+          controller.enqueue(
+            encoder.encode(
+              `data: ${JSON.stringify({ done: true, aiResponse })}\n\n`
+            )
+          );
+        } catch (error) {
+          controller.error(error);
+        }
+        controller.close();
+      },
+    });
+
+    return new NextResponse(customStream, {
+      headers: {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        Connection: 'keep-alive',
+      },
+    });
   } catch (error: any) {
-    // eslint-disable-next-line no-console
-    console.error('OpenAI API Error:', error.message);
-
-    // 에러 메시지 정제
-    const errorMessage =
-      error.message || 'Failed to fetch data from OpenAI API';
-
     return new NextResponse(
-      JSON.stringify({
-        success: false,
-        error: errorMessage,
-      }),
-      {
-        status: error.status || 500,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
+      JSON.stringify({ error: error.message || 'OpenAI API 오류' }),
+      { status: 500 }
     );
   }
 }
