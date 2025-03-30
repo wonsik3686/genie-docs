@@ -67,13 +67,23 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true, aiResponse });
   } catch (error: any) {
     // eslint-disable-next-line no-console
-    console.error(error.message);
-    return NextResponse.json(
-      {
+    console.error('OpenAI API Error:', error.message);
+
+    // 에러 메시지 정제
+    const errorMessage =
+      error.message || 'Failed to fetch data from OpenAI API';
+
+    return new NextResponse(
+      JSON.stringify({
         success: false,
-        error: 'Failed to fetch data from OpenAI API',
-      },
-      { status: 500 }
+        error: errorMessage,
+      }),
+      {
+        status: error.status || 500,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
     );
   }
 }
