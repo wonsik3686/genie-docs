@@ -1,5 +1,16 @@
 import AIResponseDisplay from '@/components/ai/AIResponseDisplay';
 import ReadmeTemplateForm from '@/components/ai/ReadmeTemplateForm';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'README 문서 생성 | Genie Docs',
+  description: 'AI를 활용하여 프로젝트의 README 문서를 자동으로 생성합니다.',
+  openGraph: {
+    title: 'README 문서 생성 | Genie Docs',
+    description: 'AI를 활용하여 프로젝트의 README 문서를 자동으로 생성합니다.',
+    type: 'website',
+  },
+};
 
 function ReadmePage() {
   return (

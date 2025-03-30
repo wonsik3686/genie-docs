@@ -1,5 +1,6 @@
 import AIResponseDisplay from '@/components/ai/AIResponseDisplay';
 import APITemplateForm from '@/components/ai/APITemplateForm';
+import { Metadata } from 'next';
 
 function ApiPage() {
   return (
@@ -14,3 +15,13 @@ function ApiPage() {
 }
 
 export default ApiPage;
+
+export const metadata: Metadata = {
+  title: 'API 문서 생성 | Genie Docs',
+  description: 'AI를 활용하여 API 문서를 자동으로 생성합니다.',
+  openGraph: {
+    title: 'API 문서 생성 | Genie Docs',
+    description: 'AI를 활용하여 API 문서를 자동으로 생성합니다.',
+    type: 'website',
+  },
+};
