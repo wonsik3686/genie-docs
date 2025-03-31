@@ -1,4 +1,4 @@
-![지니독스_랜딩페이지](https://github.com/user-attachments/assets/ef545a69-d5a6-40cf-b402-8b9efaeb0336)# Genie Docs
+# Genie Docs
 
 > OpenAI 와 Notion 를 활용하여 문서를 생성하는 프로젝트
 > 
