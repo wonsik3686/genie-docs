@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/command';
 import { useIsMobile } from '@/hooks/shadcn/use-mobile';
 import useDebounce from '@/hooks/utils/useDebounce';
-import { useNotionSearch } from '@/queries/notion.queries';
+import { useNotionSearch } from '@/lib/queries/notion.queries';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';

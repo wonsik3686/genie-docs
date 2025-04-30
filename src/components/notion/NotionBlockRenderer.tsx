@@ -1,6 +1,6 @@
 'use client';
 
-import { useNotionBlock } from '@/queries/notion.queries';
+import { useNotionBlock } from '@/lib/queries/notion.queries';
 import { getMediaSourceText, getTextFromBlock } from '@/utils/notion.utils';
 import {
   BlockObjectResponse,

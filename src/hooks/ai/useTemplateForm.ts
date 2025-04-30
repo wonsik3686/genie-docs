@@ -1,5 +1,5 @@
-import { useNotionBlocksBatch } from '@/queries/notion.queries';
-import { useOpenAIChatGPTStream } from '@/queries/openai.queries';
+import { useNotionBlocksBatch } from '@/lib/queries/notion.queries';
+import { useOpenAIChatGPTStream } from '@/lib/queries/openai.queries';
 import { useNotionStore } from '@/store/notionStore';
 import { useInitializeSettings, useSettingStore } from '@/store/settingStore';
 import { AITemplate } from '@/types/openai.types';

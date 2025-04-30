@@ -1,4 +1,4 @@
-import { useNotionPages } from '@/queries/notion.queries';
+import { useNotionPages } from '@/lib/queries/notion.queries';
 import { useNotionStore } from '@/store/notionStore';
 import { useSettingStore } from '@/store/settingStore';
 

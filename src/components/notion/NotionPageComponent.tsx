@@ -2,7 +2,7 @@
 
 import NotionPageContent from '@/components/notion/NotionPageContent';
 import NotionPageMeta from '@/components/notion/NotionPageMeta';
-import { useNotionBlocks, useNotionPage } from '@/queries/notion.queries';
+import { useNotionBlocks, useNotionPage } from '@/lib/queries/notion.queries';
 import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 import { Loader2 } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';

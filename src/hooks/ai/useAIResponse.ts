@@ -1,4 +1,4 @@
-import { useCreateNotionPage } from '@/queries/notion.queries';
+import { useCreateNotionPage } from '@/lib/queries/notion.queries';
 import { useNotionStore } from '@/store/notionStore';
 import { useOpenAIStore } from '@/store/openaiStore';
 import { useQuery } from '@tanstack/react-query';
