@@ -25,7 +25,7 @@ export default function AIResponseDisplay() {
 
   return (
     <Card className="w-full">
-      <CardHeader>
+      <CardHeader className="border-b pb-4">
         <CardTitle>
           {streamingContent ? (
             <div className="flex items-center gap-2">
@@ -37,14 +37,17 @@ export default function AIResponseDisplay() {
           )}
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex-1 overflow-auto py-6">
         <MarkdownRenderer content={displayContent} />
       </CardContent>
-      <CardFooter className="flex flex-wrap justify-end gap-3">
+      <CardFooter className="flex flex-wrap justify-end gap-3 border-t pt-4">
         <div className="flex w-full flex-wrap items-center justify-end gap-3 md:w-auto md:flex-nowrap">
           <SelectParentPageDialog />
           <Button
-            className="w-full bg-accent-point hover:bg-accent-point/80 active:bg-accent-point/60 md:w-auto"
+            variant="accent"
+            size="default"
+            width="full"
+            className="w-full md:w-auto"
             onClick={handleSaveAIResponse}
             disabled={isPending || !selectedParentPage.pageId}
           >

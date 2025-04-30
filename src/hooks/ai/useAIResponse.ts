@@ -22,6 +22,11 @@ export function useAIResponse() {
   const displayContent = streamingContent || (aiResponse?.content ?? '');
 
   const handleSaveAIResponse = () => {
+    if (!aiResponse) {
+      toast.error('AI 응답이 아직 없습니다. 먼저 문서를 생성해 주세요.');
+      return;
+    }
+
     if (!selectedParentPage.pageId) {
       toast.error('AI 응답을 저장할 페이지를 먼저 선택해주세요.');
       return;
