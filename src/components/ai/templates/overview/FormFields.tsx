@@ -1,5 +1,6 @@
 'use client';
 
+import TemplateFormBase from '@/components/ai/common/TemplateFormBase';
 import {
   FormControl,
   FormField,
@@ -10,20 +11,13 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { OverviewTemplateSchemaType } from '@/constants/formSchemas/OverviewTemplate.schema';
 import OverviewPromptTemplate from '@/constants/promptTemplates/OverviewTemplatePrompt';
-import { useForm } from 'react-hook-form';
-import TemplateFormBase from './TemplateFormBase';
+import { UseFormReturn } from 'react-hook-form';
 
-function OverviewTemplateForm() {
-  const form = useForm<OverviewTemplateSchemaType>({
-    defaultValues: {
-      projectName: '',
-      goalAndBackground: '',
-      keyFeatures: '',
-      targetUsers: '',
-      additionalPrompt: '',
-    },
-  });
+interface FormFieldsProps {
+  form: UseFormReturn<OverviewTemplateSchemaType>;
+}
 
+export default function FormFields({ form }: FormFieldsProps) {
   const formFields = (
     <>
       <FormField
@@ -132,5 +126,3 @@ function OverviewTemplateForm() {
     />
   );
 }
-
-export default OverviewTemplateForm;

@@ -1,5 +1,6 @@
 'use client';
 
+import SelectPageDialog from '@/components/ai/dialogs/SelectPageDialog';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
@@ -12,7 +13,6 @@ import { getTextFromBlock } from '@/utils/notion.utils';
 import { BlockObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 import { File, Loader2 } from 'lucide-react';
 import { FieldValues, UseFormReturn } from 'react-hook-form';
-import SelectPageDialog from './SelectPageDialog';
 
 type TemplateFormBaseProps<T extends FieldValues> = {
   form: UseFormReturn<T>;
@@ -30,7 +30,6 @@ function TemplateFormBase<T extends FieldValues>({
   useInitializeSettings();
   const { selectedPages } = useNotionStore();
   const { openAiApiKey } = useSettingStore();
-  // const { mutate: askOpenAI, isPending: isAIPending } = useAskOpenAI();
   const { mutate: askOpenAI, isPending: isAIPending } =
     useOpenAIChatGPTStream();
 
@@ -39,9 +38,7 @@ function TemplateFormBase<T extends FieldValues>({
     selectedPages.map((page) => page.pageId)
   );
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const handleSubmit = () => {
     // 각 페이지의 블록 내용을 텍스트로 변환
     const selectedPagesString = selectedPages
       .map((page, index) => {
@@ -68,7 +65,7 @@ function TemplateFormBase<T extends FieldValues>({
   return (
     <div className="mb-10 flex flex-col gap-4">
       <Form {...form}>
-        <form onSubmit={handleSubmit} className="space-y-8">
+        <div className="space-y-8">
           <Card className="flex w-full flex-col gap-4">
             <SelectPageDialog />
             <CardContent>
@@ -91,7 +88,8 @@ function TemplateFormBase<T extends FieldValues>({
           <div className="flex justify-end">
             <Button
               className="h-10 w-full bg-accent-point hover:bg-accent-point/80 active:bg-accent-point/60 md:w-60"
-              type="submit"
+              type="button"
+              onClick={handleSubmit}
               disabled={isAIPending || isBlocksPending}
             >
               {isAIPending || isBlocksPending ? (
@@ -101,7 +99,7 @@ function TemplateFormBase<T extends FieldValues>({
               )}
             </Button>
           </div>
-        </form>
+        </div>
       </Form>
     </div>
   );

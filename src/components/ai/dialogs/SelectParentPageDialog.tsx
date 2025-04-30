@@ -1,5 +1,7 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Dialog,
   DialogContent,
@@ -9,56 +11,54 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { useNotionStore } from '@/store/notionStore';
 import { useState } from 'react';
-import { Button } from '../ui/button';
-import { Checkbox } from '../ui/checkbox';
-import { ScrollArea } from '../ui/scroll-area';
 
-function SelectPageDialog() {
-  const { notionPageList, selectedPages, setSelectedPages } = useNotionStore();
+function SelectParentPageDialog() {
+  const { notionPageList, selectedParentPage, setSelectedParentPage } =
+    useNotionStore();
   const [open, setOpen] = useState(false);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
+          className="w-full bg-secondary hover:bg-secondary/80 active:bg-secondary/60 md:w-40"
           variant="outline"
-          className="bg-secondary hover:bg-secondary/80 active:bg-secondary/60"
         >
-          페이지 선택
+          저장될 대상 페이지 선택
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>페이지 선택</DialogTitle>
+          <DialogTitle>저장될 대상 페이지 선택</DialogTitle>
           <DialogDescription>
-            페이지를 선택하여 프로젝트 개요 문서 생성에 활용할 수 있습니다.
+            AI 응답이 저장될 페이지를 선택합니다.
           </DialogDescription>
         </DialogHeader>
-        <ScrollArea className="h-[60vh]">
-          <div className="flex flex-col gap-2 md:gap-1">
+        <ScrollArea className="h-[60vh] md:h-[70vh]">
+          <div className="flex flex-col gap-2">
             {notionPageList.map((page) => (
-              <div
-                className="flex items-center space-x-2 rounded-lg px-2 py-3 hover:bg-secondary/50 active:bg-secondary/30"
-                key={page.pageId}
-              >
+              <div className="flex items-center space-x-2" key={page.pageId}>
                 <Checkbox
                   id={page.pageId}
-                  checked={selectedPages.some((p) => p.pageId === page.pageId)}
+                  checked={selectedParentPage.pageId === page.pageId}
                   onCheckedChange={(checked) => {
                     if (checked) {
-                      setSelectedPages([...selectedPages, page]);
+                      setSelectedParentPage(page);
                     } else {
-                      setSelectedPages(
-                        selectedPages.filter((p) => p.pageId !== page.pageId)
-                      );
+                      setSelectedParentPage({
+                        pageId: '',
+                        pageTitle: '',
+                        pageContent: '',
+                      });
                     }
                   }}
                 />
                 <label
                   htmlFor={page.pageId}
-                  className="h-full w-full text-lg-regular leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
                   {page.pageTitle}
                 </label>
@@ -81,4 +81,4 @@ function SelectPageDialog() {
   );
 }
 
-export default SelectPageDialog;
+export default SelectParentPageDialog;

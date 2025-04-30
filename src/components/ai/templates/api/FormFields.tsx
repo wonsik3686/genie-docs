@@ -1,5 +1,3 @@
-'use client';
-
 import {
   FormControl,
   FormField,
@@ -9,28 +7,16 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { APITemplateSchemaType } from '@/constants/formSchemas/APITemplate.schema';
-import { getPromptTemplate } from '@/utils/ai/promptTemplate';
-import { useForm } from 'react-hook-form';
-import TemplateFormBase from '../TemplateFormBase';
+import { UseFormReturn } from 'react-hook-form';
 
-function ApiTemplateForm() {
-  const form = useForm<APITemplateSchemaType>({
-    defaultValues: {
-      apiName: '',
-      requestFormat: {
-        headers: '',
-        body: '',
-      },
-      responseFormat: {
-        status: '',
-        body: '',
-      },
-      examples: '',
-      additionalPrompt: '',
-    },
-  });
+type APITemplateFormFieldsProps = {
+  form: UseFormReturn<APITemplateSchemaType>;
+};
 
-  const formFields = (
+export default function APITemplateFormFields({
+  form,
+}: APITemplateFormFieldsProps) {
+  return (
     <>
       <FormField
         control={form.control}
@@ -146,15 +132,4 @@ function ApiTemplateForm() {
       />
     </>
   );
-
-  return (
-    <TemplateFormBase
-      form={form}
-      formFields={formFields}
-      getPromptTemplate={getPromptTemplate}
-      templateType="api-document"
-    />
-  );
 }
-
-export default ApiTemplateForm;

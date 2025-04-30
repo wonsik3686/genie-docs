@@ -1,22 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
-import { useCreateNotionPage } from '@/queries/notion.queries';
-import { useNotionStore } from '@/store/notionStore';
-import { useOpenAIStore } from '@/store/openaiStore';
-import { useQuery } from '@tanstack/react-query';
-import { Loader2 } from 'lucide-react';
-import ReactMarkdown from 'react-markdown';
-import { Button } from '../ui/button';
+import SelectParentPageDialog from '@/components/ai/dialogs/SelectPageDialog';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from '../ui/card';
-import { ScrollArea, ScrollBar } from '../ui/scroll-area';
-import SelectParentPageDialog from './SelectParentPageDialog';
+} from '@/components/ui/card';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import { useCreateNotionPage } from '@/queries/notion.queries';
+import { useNotionStore } from '@/store/notionStore';
+import { useOpenAIStore } from '@/store/openaiStore';
+import { useQuery } from '@tanstack/react-query';
+import { Loader2 } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+
 function AIResponseDisplay() {
   const { data: streamingContent } = useQuery({
     queryKey: ['openai', 'stream'],

@@ -1,5 +1,6 @@
 import AIResponseDisplay from '@/components/ai/AIResponseDisplay';
-import APITemplateForm from '@/components/ai/APITemplateForm';
+import APITemplateForm from '@/components/ai/templates/api';
+
 import { Metadata } from 'next';
 
 function ApiPage() {

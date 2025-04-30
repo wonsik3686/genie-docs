@@ -1,5 +1,6 @@
-import AITemplateSelector from '@/components/ai/AITemplateSelector';
+import AITemplateSelector from '@/components/ai/common/AITemplateSelector';
 import StoredAIResponseList from '@/components/ai/StoredAIResponseList';
+
 import { Metadata } from 'next';
 
 function AiPage() {

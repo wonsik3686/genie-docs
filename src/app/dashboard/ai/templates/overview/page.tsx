@@ -1,5 +1,5 @@
 import AIResponseDisplay from '@/components/ai/AIResponseDisplay';
-import OverviewTemplateForm from '@/components/ai/OverviewTemplateForm';
+import OverviewTemplateForm from '@/components/ai/templates/overview';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {

@@ -1,5 +1,5 @@
 import AIResponseDisplay from '@/components/ai/AIResponseDisplay';
-import ReadmeTemplateForm from '@/components/ai/ReadmeTemplateForm';
+import ReadmeTemplateForm from '@/components/ai/templates/readme';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {

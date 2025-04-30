@@ -1,9 +1,9 @@
 'use client';
 
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import useStoredAIResponseList from '@/hooks/ai/useStoredAIResponseList';
 import useInfiniteScroll from '@/hooks/utils/useInfiniteScroll';
 import ReactMarkdown from 'react-markdown';
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 
 function StoredAIResponseList() {
   const { data, fetchNextPage, hasNextPage, isLoading } =
