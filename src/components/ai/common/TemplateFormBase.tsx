@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
 import { useTemplateForm } from '@/hooks/ai/useTemplateForm';
-import { AITemplate } from '@/types/openai.types';
+import { AITemplate } from '@/lib/types/openai.types';
 import { File, Loader2 } from 'lucide-react';
 import { FieldValues, UseFormReturn } from 'react-hook-form';
 import SelectPageDialog from '../dialogs/SelectPageDialog';

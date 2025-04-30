@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-import { useNotionStore } from '@/store/notionStore';
 import {
   NotionPagesResponse,
   SearchRequestBody,
   SearchResponse,
-} from '@/types/dto/notion.dto.types';
+} from '@/lib/types/dto/notion.dto.types';
+import { useNotionStore } from '@/store/notionStore';
 import {
   GetBlockResponse,
   GetPageResponse,

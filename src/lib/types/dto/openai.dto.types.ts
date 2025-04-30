@@ -1,4 +1,4 @@
-import { AIResponse, AITemplate } from '@/types/openai.types';
+import { AIResponse, AITemplate } from '@/lib/types/openai.types';
 
 export type ChatOpenAIResponse = {
   success: boolean;

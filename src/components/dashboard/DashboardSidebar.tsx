@@ -29,7 +29,7 @@ import {
 } from '@/components/ui/sidebar';
 import { useSidebarState } from '@/hooks/dashboard/useSidebarState';
 import { useNotionPageTree } from '@/hooks/notion/useNotionPageTree';
-import { NotionPageHierarchy } from '@/types/notion.types';
+import { NotionPageHierarchy } from '@/lib/types/notion.types';
 import Link from 'next/link';
 import { Button } from '../ui/button';
 import {

@@ -1,5 +1,5 @@
+import { AIResponse, AITemplate } from '@/lib/types/openai.types';
 import { useOpenAIStore } from '@/store/openaiStore';
-import { AIResponse, AITemplate } from '@/types/openai.types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 type OpenAIMutationParams = {

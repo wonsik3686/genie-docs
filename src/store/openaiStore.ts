@@ -1,4 +1,4 @@
-import { AIResponse } from '@/types/openai.types';
+import { AIResponse } from '@/lib/types/openai.types';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 

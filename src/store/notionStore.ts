@@ -1,4 +1,4 @@
-import { NotionPage, NotionPageHierarchy } from '@/types/notion.types';
+import { NotionPage, NotionPageHierarchy } from '@/lib/types/notion.types';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
