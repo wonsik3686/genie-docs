@@ -1,7 +1,7 @@
 import {
   settingSchema,
   type SettingSchemaType,
-} from '@/constants/formSchemas/Setting.schema';
+} from '@/lib/constants/formSchemas/Setting.schema';
 import { useSettingStore } from '@/store/settingStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';

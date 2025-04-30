@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { OverviewTemplateSchemaType } from '@/constants/formSchemas/OverviewTemplate.schema';
+import { OverviewTemplateSchemaType } from '@/lib/constants/formSchemas/OverviewTemplate.schema';
 import { UseFormReturn } from 'react-hook-form';
 
 interface FormFieldsProps {

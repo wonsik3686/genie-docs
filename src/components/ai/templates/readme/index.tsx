@@ -1,8 +1,8 @@
 'use client';
 
 import TemplateFormBase from '@/components/ai/common/TemplateFormBase';
-import { ReadmeTemplateSchemaType } from '@/constants/formSchemas/ReadmeTemplate.schema';
-import ReadmeTemplatePrompt from '@/constants/promptTemplates/ReadmeTemplatePrompt';
+import { ReadmeTemplateSchemaType } from '@/lib/constants/formSchemas/ReadmeTemplate.schema';
+import ReadmeTemplatePrompt from '@/lib/constants/promptTemplates/ReadmeTemplatePrompt';
 import { useForm } from 'react-hook-form';
 import FormFields from './FormFields';
 

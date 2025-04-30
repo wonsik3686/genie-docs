@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { ReadmeTemplateSchemaType } from '@/constants/formSchemas/ReadmeTemplate.schema';
+import { ReadmeTemplateSchemaType } from '@/lib/constants/formSchemas/ReadmeTemplate.schema';
 import { UseFormReturn } from 'react-hook-form';
 
 interface FormFieldsProps {

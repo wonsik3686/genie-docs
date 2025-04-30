@@ -1,4 +1,4 @@
-import { APITemplateSchemaType } from '@/constants/formSchemas/APITemplate.schema';
+import { APITemplateSchemaType } from '@/lib/constants/formSchemas/APITemplate.schema';
 import { useForm } from 'react-hook-form';
 
 export default function useAPITemplateForm() {

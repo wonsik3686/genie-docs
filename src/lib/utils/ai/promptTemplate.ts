@@ -1,5 +1,5 @@
-import { APITemplateSchemaType } from '@/constants/formSchemas/APITemplate.schema';
-import APITemplatePrompt from '@/constants/promptTemplates/APITemplatePrompt';
+import { APITemplateSchemaType } from '@/lib/constants/formSchemas/APITemplate.schema';
+import APITemplatePrompt from '@/lib/constants/promptTemplates/APITemplatePrompt';
 
 export const getPromptTemplate = (
   formValues: APITemplateSchemaType,

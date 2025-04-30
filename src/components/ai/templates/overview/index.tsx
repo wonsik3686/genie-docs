@@ -1,8 +1,8 @@
 'use client';
 
 import TemplateFormBase from '@/components/ai/common/TemplateFormBase';
-import { OverviewTemplateSchemaType } from '@/constants/formSchemas/OverviewTemplate.schema';
-import OverviewTemplatePrompt from '@/constants/promptTemplates/OverviewTemplatePrompt';
+import { OverviewTemplateSchemaType } from '@/lib/constants/formSchemas/OverviewTemplate.schema';
+import OverviewTemplatePrompt from '@/lib/constants/promptTemplates/OverviewTemplatePrompt';
 import { useForm } from 'react-hook-form';
 import FormFields from './FormFields';
 
