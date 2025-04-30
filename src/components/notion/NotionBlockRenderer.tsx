@@ -9,7 +9,11 @@ import {
 } from '@notionhq/client/build/src/api-endpoints';
 import Image from 'next/image';
 
-const NotionBlockRenderer = ({ block }: { block: BlockObjectResponse }) => {
+export default function NotionBlockRenderer({
+  block,
+}: {
+  block: BlockObjectResponse;
+}) {
   const isImageBlock = (
     block: BlockObjectResponse
   ): block is ImageBlockObjectResponse => {
@@ -96,7 +100,7 @@ const NotionBlockRenderer = ({ block }: { block: BlockObjectResponse }) => {
         </div>
       );
   }
-};
+}
 
 const ToggleChildrenRenderer = ({
   block,
@@ -113,5 +117,3 @@ const ToggleChildrenRenderer = ({
     </>
   );
 };
-
-export default NotionBlockRenderer;

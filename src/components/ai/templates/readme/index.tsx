@@ -6,7 +6,7 @@ import ReadmeTemplatePrompt from '@/constants/promptTemplates/ReadmeTemplateProm
 import { useForm } from 'react-hook-form';
 import FormFields from './FormFields';
 
-function ReadmeTemplateForm() {
+export default function ReadmeTemplateForm() {
   const form = useForm<ReadmeTemplateSchemaType>({
     defaultValues: {
       projectName: '',
@@ -40,5 +40,3 @@ function ReadmeTemplateForm() {
     />
   );
 }
-
-export default ReadmeTemplateForm;

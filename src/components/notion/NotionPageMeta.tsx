@@ -8,7 +8,9 @@ export type NotionPageMetaProps = {
   notionPageMeta: PageObjectResponse;
 };
 
-const NotionPageMeta = ({ notionPageMeta }: NotionPageMetaProps) => {
+export default function NotionPageMeta({
+  notionPageMeta,
+}: NotionPageMetaProps) {
   const titleProperty = notionPageMeta.properties['title'];
   const title =
     titleProperty?.type === 'title'
@@ -71,6 +73,4 @@ const NotionPageMeta = ({ notionPageMeta }: NotionPageMetaProps) => {
       </div> */}
     </div>
   );
-};
-
-export default NotionPageMeta;
+}

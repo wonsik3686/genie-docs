@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/card';
 import Link from 'next/link';
 
-function AITemplateSelector() {
+export default function AITemplateSelector() {
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
       <Card>
@@ -51,5 +51,3 @@ function AITemplateSelector() {
     </div>
   );
 }
-
-export default AITemplateSelector;

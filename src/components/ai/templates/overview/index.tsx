@@ -6,7 +6,7 @@ import OverviewTemplatePrompt from '@/constants/promptTemplates/OverviewTemplate
 import { useForm } from 'react-hook-form';
 import FormFields from './FormFields';
 
-function OverviewTemplateForm() {
+export default function OverviewTemplateForm() {
   const form = useForm<OverviewTemplateSchemaType>({
     defaultValues: {
       projectName: '',
@@ -40,5 +40,3 @@ function OverviewTemplateForm() {
     />
   );
 }
-
-export default OverviewTemplateForm;

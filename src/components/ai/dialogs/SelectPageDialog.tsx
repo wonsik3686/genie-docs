@@ -15,7 +15,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { useNotionStore } from '@/store/notionStore';
 import { useState } from 'react';
 
-function SelectPageDialog() {
+export default function SelectPageDialog() {
   const { notionPageList, selectedPages, setSelectedPages } = useNotionStore();
   const [open, setOpen] = useState(false);
 
@@ -80,5 +80,3 @@ function SelectPageDialog() {
     </Dialog>
   );
 }
-
-export default SelectPageDialog;

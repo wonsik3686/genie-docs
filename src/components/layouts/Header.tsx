@@ -20,7 +20,7 @@ import {
   NavigationMenuTrigger,
 } from '../ui/navigation-menu';
 
-function Header() {
+export default function Header() {
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
   const isMobile = useIsMobile();
@@ -111,5 +111,3 @@ function Header() {
     </header>
   );
 }
-
-export default Header;

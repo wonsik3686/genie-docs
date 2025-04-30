@@ -17,7 +17,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 
-function AIResponseDisplay() {
+export default function AIResponseDisplay() {
   const { data: streamingContent } = useQuery({
     queryKey: ['openai', 'stream'],
     initialData: '',
@@ -83,5 +83,3 @@ function AIResponseDisplay() {
     </div>
   );
 }
-
-export default AIResponseDisplay;

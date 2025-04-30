@@ -6,7 +6,7 @@ import APITemplatePrompt from '@/constants/promptTemplates/APITemplatePrompt';
 import { useForm } from 'react-hook-form';
 import FormFields from './FormFields';
 
-function APITemplateForm() {
+export default function APITemplateForm() {
   const form = useForm<APITemplateSchemaType>({
     defaultValues: {
       apiName: '',
@@ -49,5 +49,3 @@ function APITemplateForm() {
     />
   );
 }
-
-export default APITemplateForm;

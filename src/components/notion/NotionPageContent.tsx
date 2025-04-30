@@ -8,7 +8,9 @@ export type NotionPageContentProps = {
   notionPageContent: ListBlockChildrenResponse;
 };
 
-const NotionPageContent = ({ notionPageContent }: NotionPageContentProps) => {
+export default function NotionPageContent({
+  notionPageContent,
+}: NotionPageContentProps) {
   return (
     <div className="notion-page-content rounded-lg bg-transparent p-6">
       {notionPageContent.results.map((block) => (
@@ -19,6 +21,4 @@ const NotionPageContent = ({ notionPageContent }: NotionPageContentProps) => {
       ))}
     </div>
   );
-};
-
-export default NotionPageContent;
+}

@@ -21,7 +21,7 @@ type TemplateFormBaseProps<T extends FieldValues> = {
   templateType: AITemplate;
 };
 
-function TemplateFormBase<T extends FieldValues>({
+export default function TemplateFormBase<T extends FieldValues>({
   form,
   formFields,
   getPromptTemplate,
@@ -110,5 +110,3 @@ function TemplateFormBase<T extends FieldValues>({
     </div>
   );
 }
-
-export default TemplateFormBase;
