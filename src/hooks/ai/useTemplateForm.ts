@@ -1,9 +1,9 @@
 import { useNotionBlocksBatch } from '@/lib/queries/notion.queries';
 import { useOpenAIChatGPTStream } from '@/lib/queries/openai.queries';
 import { AITemplate } from '@/lib/types/openai.types';
+import { getTextFromBlock } from '@/lib/utils/notion.utils';
 import { useNotionStore } from '@/store/notionStore';
 import { useInitializeSettings, useSettingStore } from '@/store/settingStore';
-import { getTextFromBlock } from '@/utils/notion.utils';
 import { BlockObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 import { UseFormReturn } from 'react-hook-form';
 
