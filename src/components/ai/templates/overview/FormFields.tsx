@@ -1,6 +1,5 @@
 'use client';
 
-import TemplateFormBase from '@/components/ai/common/TemplateFormBase';
 import {
   FormControl,
   FormField,
@@ -10,7 +9,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { OverviewTemplateSchemaType } from '@/constants/formSchemas/OverviewTemplate.schema';
-import OverviewPromptTemplate from '@/constants/promptTemplates/OverviewTemplatePrompt';
 import { UseFormReturn } from 'react-hook-form';
 
 interface FormFieldsProps {
@@ -18,7 +16,7 @@ interface FormFieldsProps {
 }
 
 export default function FormFields({ form }: FormFieldsProps) {
-  const formFields = (
+  return (
     <>
       <FormField
         control={form.control}
@@ -101,28 +99,5 @@ export default function FormFields({ form }: FormFieldsProps) {
         )}
       />
     </>
-  );
-
-  const getPromptTemplate = (
-    formValues: OverviewTemplateSchemaType,
-    pagesContent: string
-  ) => {
-    return OverviewPromptTemplate(
-      formValues.projectName,
-      formValues.goalAndBackground,
-      formValues.keyFeatures,
-      formValues.targetUsers,
-      formValues.additionalPrompt,
-      pagesContent
-    );
-  };
-
-  return (
-    <TemplateFormBase
-      form={form}
-      formFields={formFields}
-      getPromptTemplate={getPromptTemplate}
-      templateType="project-overview"
-    />
   );
 }

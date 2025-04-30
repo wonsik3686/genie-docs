@@ -33,9 +33,12 @@ function TemplateFormBase<T extends FieldValues>({
   const { mutate: askOpenAI, isPending: isAIPending } =
     useOpenAIChatGPTStream();
 
-  // 선택된 페이지들의 블록 데이터를 가져오기
+  // 선택된 페이지들의 블록 데이터
   const { data: blocksData, isPending: isBlocksPending } = useNotionBlocksBatch(
-    selectedPages.map((page) => page.pageId)
+    selectedPages.map((page) => page.pageId),
+    {
+      enabled: selectedPages.length > 0,
+    }
   );
 
   const handleSubmit = () => {
@@ -66,6 +69,7 @@ function TemplateFormBase<T extends FieldValues>({
     <div className="mb-10 flex flex-col gap-4">
       <Form {...form}>
         <div className="space-y-8">
+          {/* 페이지 선택 */}
           <Card className="flex w-full flex-col gap-4">
             <SelectPageDialog />
             <CardContent>
@@ -84,7 +88,9 @@ function TemplateFormBase<T extends FieldValues>({
               )}
             </CardContent>
           </Card>
+          {/* 폼 필드 */}
           {formFields}
+          {/* 생성 버튼 */}
           <div className="flex justify-end">
             <Button
               className="h-10 w-full bg-accent-point hover:bg-accent-point/80 active:bg-accent-point/60 md:w-60"

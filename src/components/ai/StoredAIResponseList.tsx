@@ -1,9 +1,9 @@
 'use client';
 
+import MarkdownRenderer from '@/components/ai/common/MarkdownRenderer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import useStoredAIResponseList from '@/hooks/ai/useStoredAIResponseList';
 import useInfiniteScroll from '@/hooks/utils/useInfiniteScroll';
-import ReactMarkdown from 'react-markdown';
 
 function StoredAIResponseList() {
   const { data, fetchNextPage, hasNextPage, isLoading } =
@@ -28,7 +28,7 @@ function StoredAIResponseList() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <ReactMarkdown>{response.content}</ReactMarkdown>
+              <MarkdownRenderer content={response.content} />
             </CardContent>
           </Card>
         )

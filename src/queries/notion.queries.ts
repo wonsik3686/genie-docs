@@ -108,7 +108,10 @@ export function useNotionBlock(blockId: string) {
 }
 
 // 여러 페이지 노션 블록 목록 가져오기
-export function useNotionBlocksBatch(pageIdList: string[]) {
+export function useNotionBlocksBatch(
+  pageIdList: string[],
+  options?: { enabled?: boolean }
+) {
   return useQuery<ListBlockChildrenResponse[], Error>({
     queryKey: notionQueryKeys.blocksBatch(pageIdList),
     queryFn: async () => {
@@ -120,6 +123,7 @@ export function useNotionBlocksBatch(pageIdList: string[]) {
       }
       return response.json();
     },
+    enabled: options?.enabled,
   });
 }
 
