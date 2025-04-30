@@ -11,65 +11,11 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import {
-  settingSchema,
-  type SettingSchemaType,
-} from '@/constants/formSchemas/Setting.schema';
+import { useSettingForm } from '@/hooks/settings/useSettingForm';
 import { cn } from '@/lib/utils';
-import { useInitializeSettings, useSettingStore } from '@/store/settingStore';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
 
 export default function SettingForm() {
-  useInitializeSettings();
-  const {
-    notionApiKey,
-    notionPageId,
-    openAiApiKey,
-    setNotionApiKey,
-    setNotionPageId,
-    setOpenAiApiKey,
-  } = useSettingStore();
-
-  const form = useForm<SettingSchemaType>({
-    mode: 'onBlur',
-    resolver: zodResolver(settingSchema),
-    defaultValues: {
-      notionApiKey: '',
-      notionPageId: '',
-      openAiApiKey: '',
-    },
-  });
-
-  useEffect(() => {
-    form.reset({
-      notionApiKey,
-      notionPageId,
-      openAiApiKey,
-    });
-  }, [form, notionApiKey, notionPageId, openAiApiKey]);
-
-  const formValues = form.watch();
-  const hasUnsavedChanges =
-    formValues.notionApiKey !== notionApiKey ||
-    formValues.notionPageId !== notionPageId ||
-    formValues.openAiApiKey !== openAiApiKey;
-
-  function onSubmit(values: SettingSchemaType) {
-    try {
-      setNotionApiKey(values.notionApiKey);
-      setNotionPageId(values.notionPageId);
-      setOpenAiApiKey(values.openAiApiKey);
-    } catch (error) {
-      if (error instanceof Error) {
-        form.setError('root', {
-          type: 'manual',
-          message: `설정 저장 중 오류가 발생했습니다: ${error.message}`,
-        });
-      }
-    }
-  }
+  const { form, hasUnsavedChanges, onSubmit } = useSettingForm();
 
   return (
     <Form {...form}>
