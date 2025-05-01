@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import useNotionIntegrationStatus from '@/hooks/notion/useNotionIntegrationStatus';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/shadcn.utils';
 
 export default function IntegrationStatus() {
   const { isNotionIntegrated, isOpenAIIntegrated } =

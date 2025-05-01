@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useSettingForm } from '@/hooks/settings/useSettingForm';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/shadcn.utils';
 
 export default function SettingForm() {
   const { form, hasUnsavedChanges, onSubmit } = useSettingForm();
