@@ -26,14 +26,11 @@ import {
   SidebarMenuSubItem,
   SidebarRail,
   SidebarSeparator,
-  useSidebar,
 } from '@/components/ui/sidebar';
-import { useNotionPages } from '@/queries/notion.queries';
-import { useNotionStore } from '@/store/notionStore';
-import { useSettingStore } from '@/store/settingStore';
-import { NotionPageHierarchy } from '@/types/notion.types';
+import { useSidebarState } from '@/hooks/dashboard/useSidebarState';
+import { useNotionPageTree } from '@/hooks/notion/useNotionPageTree';
+import { NotionPageHierarchy } from '@/lib/types/notion.types';
 import Link from 'next/link';
-import { useState } from 'react';
 import { Button } from '../ui/button';
 import {
   Collapsible,
@@ -49,11 +46,6 @@ import {
 } from '../ui/tooltip';
 
 const documentsMenuItems = [
-  // {
-  //   title: '노션 페이지 전체 보기',
-  //   url: '/dashboard/notion/pages',
-  //   icon: BookOpen,
-  // },
   {
     title: '노션 페이지',
     url: '/dashboard/notion',
@@ -61,96 +53,62 @@ const documentsMenuItems = [
   },
 ];
 
-// const aiMenuItems = [
-//   {
-//     title: 'AI',
-//     url: '/dashboard/ai',
-//     icon: Brain,
-//   },
-//   {
-//     title: '프로젝트 개요 문서 생성',
-//     url: '/dashboard/ai/project-overview',
-//     icon: Brain,
-//   },
-// ];
-
-const etcMenuItems: { title: string; url: string; icon: React.ElementType }[] =
-  [];
+/**
+ * 노션 페이지 트리를 재귀적으로 렌더링하는 컴포넌트
+ */
+function NotionPageTreeItem({ page }: { page: NotionPageHierarchy }) {
+  return (
+    <SidebarMenuSub key={page.pageId}>
+      <Collapsible
+        key={page.pageId}
+        defaultOpen={false}
+        className={`group/collapsible${page.pageId}`}
+      >
+        <SidebarMenuSubItem>
+          <Tooltip>
+            <TooltipTrigger>
+              <CollapsibleTrigger asChild>
+                <SidebarMenuButton className="w-40 hover:bg-secondary" asChild>
+                  <Link
+                    className="flex w-full items-center justify-between"
+                    href={`/dashboard/notion/page?pageId=${page.pageId}`}
+                  >
+                    <FileIcon />
+                    <span className="w-full truncate">{page.pageTitle}</span>
+                    {page.children && page.children.length > 0 && (
+                      <ChevronDown
+                        className={`ml-auto transition-transform group-data-[state=open]/collapsible${page.pageId}:rotate-90`}
+                      />
+                    )}
+                  </Link>
+                </SidebarMenuButton>
+              </CollapsibleTrigger>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{page.pageTitle}</p>
+            </TooltipContent>
+          </Tooltip>
+          {page.children && page.children.length > 0 && (
+            <CollapsibleContent>
+              {page.children.map((child) => (
+                <NotionPageTreeItem key={child.pageId} page={child} />
+              ))}
+            </CollapsibleContent>
+          )}
+        </SidebarMenuSubItem>
+      </Collapsible>
+    </SidebarMenuSub>
+  );
+}
 
 export function DashboardSidebar() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const { setOpen } = useSidebar();
-
-  const notionPageId = useSettingStore((state) => state.notionPageId);
-  useNotionPages(notionPageId);
-  const notionPages = useNotionStore((state) => state.pages);
-
-  function handleMouseEnter() {
-    setOpen(true);
-  }
-
-  function handleMouseLeave() {
-    if (!isSidebarOpen) {
-      setOpen(false);
-      setIsSidebarOpen(false);
-    }
-  }
-
-  function handleToggleSidebar() {
-    if (isSidebarOpen) {
-      setOpen(false);
-      setIsSidebarOpen(false);
-    } else {
-      setOpen(true);
-      setIsSidebarOpen(true);
-    }
-  }
-
-  function renderNotionPages(page: NotionPageHierarchy) {
-    return (
-      <SidebarMenuSub key={page.pageId}>
-        <Collapsible
-          key={page.pageId}
-          defaultOpen={false}
-          className={`group/collapsible${page.pageId}`}
-        >
-          <SidebarMenuSubItem>
-            <Tooltip>
-              <TooltipTrigger>
-                <CollapsibleTrigger asChild>
-                  <SidebarMenuButton
-                    className="w-40 hover:bg-secondary"
-                    asChild
-                  >
-                    <Link
-                      className="flex w-full items-center justify-between"
-                      href={`/dashboard/notion/page?pageId=${page.pageId}`}
-                    >
-                      <FileIcon />
-                      <span className="w-full truncate">{page.pageTitle}</span>
-                      {page.children && page.children.length > 0 && (
-                        <ChevronDown
-                          className={`ml-auto transition-transform group-data-[state=open]/collapsible${page.pageId}:rotate-90`}
-                        />
-                      )}
-                    </Link>
-                  </SidebarMenuButton>
-                </CollapsibleTrigger>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>{page.pageTitle}</p>
-              </TooltipContent>
-            </Tooltip>
-            {page.children && page.children.length > 0 && (
-              <CollapsibleContent>
-                {page.children.map((child) => renderNotionPages(child))}
-              </CollapsibleContent>
-            )}
-          </SidebarMenuSubItem>
-        </Collapsible>
-      </SidebarMenuSub>
-    );
-  }
+  const {
+    isSidebarOpen,
+    handleMouseEnter,
+    handleMouseLeave,
+    handleToggleSidebar,
+  } = useSidebarState();
+  const { pages } = useNotionPageTree();
 
   return (
     <Sidebar
@@ -202,9 +160,12 @@ export function DashboardSidebar() {
                           </SidebarMenuButton>
                         </CollapsibleTrigger>
                         <CollapsibleContent>
-                          {notionPages.children &&
-                            notionPages.children.length > 0 &&
-                            renderNotionPages(notionPages)}
+                          {pages.children?.map((child) => (
+                            <NotionPageTreeItem
+                              key={child.pageId}
+                              page={child}
+                            />
+                          ))}
                         </CollapsibleContent>
                       </SidebarMenuItem>
                     ))}
@@ -217,16 +178,6 @@ export function DashboardSidebar() {
               <SidebarGroupContent>
                 <SidebarMenu>
                   <Collapsible defaultOpen className="group/collapsible">
-                    {/* {aiMenuItems.map((item) => (
-                    <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton asChild>
-                        <Link href={item.url}>
-                          <item.icon />
-                          <span>{item.title}</span>
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))} */}
                     <SidebarMenuItem>
                       <CollapsibleTrigger asChild>
                         <SidebarMenuButton
@@ -298,21 +249,6 @@ export function DashboardSidebar() {
               </SidebarGroupContent>
             </SidebarGroup>
             <SidebarSeparator />
-            <SidebarGroup>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {etcMenuItems.map((item) => (
-                    <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton asChild>
-                        <Link href={item.url}>
-                          <span>{item.title}</span>
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
           </ScrollArea>
         </SidebarContent>
       </TooltipProvider>

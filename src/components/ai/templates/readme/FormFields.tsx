@@ -8,23 +8,15 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { ReadmeTemplateSchemaType } from '@/constants/formSchemas/ReadmeTemplate.schema';
-import ReadmeTemplatePrompt from '@/constants/promptTemplates/ReadmeTemplatePrompt';
-import { useForm } from 'react-hook-form';
-import TemplateFormBase from './TemplateFormBase';
+import { ReadmeTemplateSchemaType } from '@/lib/constants/formSchemas/ReadmeTemplate.schema';
+import { UseFormReturn } from 'react-hook-form';
 
-function ReadmeTemplateForm() {
-  const form = useForm<ReadmeTemplateSchemaType>({
-    defaultValues: {
-      projectName: '',
-      installation: '',
-      usage: '',
-      contribution: '',
-      additionalPrompt: '',
-    },
-  });
+interface FormFieldsProps {
+  form: UseFormReturn<ReadmeTemplateSchemaType>;
+}
 
-  const formFields = (
+export default function FormFields({ form }: FormFieldsProps) {
+  return (
     <>
       <FormField
         control={form.control}
@@ -108,29 +100,4 @@ function ReadmeTemplateForm() {
       />
     </>
   );
-
-  const getPromptTemplate = (
-    formValues: ReadmeTemplateSchemaType,
-    pagesContent: string
-  ) => {
-    return ReadmeTemplatePrompt(
-      formValues.projectName,
-      formValues.installation,
-      formValues.usage,
-      formValues.contribution,
-      formValues.additionalPrompt,
-      pagesContent
-    );
-  };
-
-  return (
-    <TemplateFormBase
-      form={form}
-      formFields={formFields}
-      getPromptTemplate={getPromptTemplate}
-      templateType="readme"
-    />
-  );
 }
-
-export default ReadmeTemplateForm;

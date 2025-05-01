@@ -1,5 +1,7 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Dialog,
   DialogContent,
@@ -9,13 +11,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { useNotionStore } from '@/store/notionStore';
 import { useState } from 'react';
-import { Button } from '../ui/button';
-import { Checkbox } from '../ui/checkbox';
-import { ScrollArea } from '../ui/scroll-area';
 
-function SelectPageDialog() {
+export default function SelectPageDialog() {
   const { notionPageList, selectedPages, setSelectedPages } = useNotionStore();
   const [open, setOpen] = useState(false);
 
@@ -80,5 +80,3 @@ function SelectPageDialog() {
     </Dialog>
   );
 }
-
-export default SelectPageDialog;

@@ -1,16 +1,7 @@
 'use client';
 
-import { Menu, Moon, Sun } from 'lucide-react';
-import { useTheme } from 'next-themes';
-import { useEffect } from 'react';
-
+import NotionSearchCommand from '@/components/notion/search/NotionSearchCommand';
 import { Button } from '@/components/ui/button';
-import { SidebarTrigger } from '@/components/ui/sidebar';
-import useNotionIntegrationStatus from '@/hooks/notion/useNotionIntegrationStatus';
-import { useIsMobile } from '@/hooks/shadcn/use-mobile';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import NotionSearchCommand from '../notion/NotionSearchCommand';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -18,9 +9,17 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-} from '../ui/navigation-menu';
+} from '@/components/ui/navigation-menu';
+import { SidebarTrigger } from '@/components/ui/sidebar';
+import useNotionIntegrationStatus from '@/hooks/notion/useNotionIntegrationStatus';
+import { useIsMobile } from '@/hooks/shadcn/use-mobile';
+import { Menu, Moon, Sun } from 'lucide-react';
+import { useTheme } from 'next-themes';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
 
-function Header() {
+export default function Header() {
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
   const isMobile = useIsMobile();
@@ -111,5 +110,3 @@ function Header() {
     </header>
   );
 }
-
-export default Header;

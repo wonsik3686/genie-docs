@@ -1,5 +1,3 @@
-'use client';
-
 import {
   FormControl,
   FormField,
@@ -8,29 +6,17 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { APITemplateSchemaType } from '@/constants/formSchemas/APITemplate.schema';
-import APITemplatePrompt from '@/constants/promptTemplates/APITemplatePrompt';
-import { useForm } from 'react-hook-form';
-import TemplateFormBase from './TemplateFormBase';
+import { APITemplateSchemaType } from '@/lib/constants/formSchemas/APITemplate.schema';
+import { UseFormReturn } from 'react-hook-form';
 
-function ApiTemplateForm() {
-  const form = useForm<APITemplateSchemaType>({
-    defaultValues: {
-      apiName: '',
-      requestFormat: {
-        headers: '',
-        body: '',
-      },
-      responseFormat: {
-        status: '',
-        body: '',
-      },
-      examples: '',
-      additionalPrompt: '',
-    },
-  });
+type APITemplateFormFieldsProps = {
+  form: UseFormReturn<APITemplateSchemaType>;
+};
 
-  const formFields = (
+export default function APITemplateFormFields({
+  form,
+}: APITemplateFormFieldsProps) {
+  return (
     <>
       <FormField
         control={form.control}
@@ -146,32 +132,4 @@ function ApiTemplateForm() {
       />
     </>
   );
-
-  const getPromptTemplate = (
-    formValues: APITemplateSchemaType,
-    pagesContent: string
-  ) => {
-    const requestFormat = `헤더: ${formValues.requestFormat.headers}\n\n바디: ${formValues.requestFormat.body}`;
-    const responseFormat = `상태: ${formValues.responseFormat.status}\n\n바디: ${formValues.responseFormat.body}`;
-
-    return APITemplatePrompt(
-      formValues.apiName,
-      requestFormat,
-      responseFormat,
-      formValues.examples,
-      formValues.additionalPrompt,
-      pagesContent
-    );
-  };
-
-  return (
-    <TemplateFormBase
-      form={form}
-      formFields={formFields}
-      getPromptTemplate={getPromptTemplate}
-      templateType="api-document"
-    />
-  );
 }
-
-export default ApiTemplateForm;

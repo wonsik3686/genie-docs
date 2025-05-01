@@ -1,5 +1,5 @@
 import AIResponseDisplay from '@/components/ai/AIResponseDisplay';
-import ReadmeTemplateForm from '@/components/ai/ReadmeTemplateForm';
+import ReadmeTemplateForm from '@/components/ai/templates/readme';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
 };
 
-function ReadmePage() {
+export default function ReadmePage() {
   return (
     <>
       <h1 className="text-2xl font-bold">README 문서 생성</h1>
@@ -23,5 +23,3 @@ function ReadmePage() {
     </>
   );
 }
-
-export default ReadmePage;

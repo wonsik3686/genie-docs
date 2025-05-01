@@ -1,11 +1,23 @@
-import { NotionPage, NotionPageHierarchy } from '@/types/notion.types';
+import { NotionPage, NotionPageHierarchy } from '@/lib/types/notion.types';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
 export type notionState = {
+  /**
+   * 노션 페이지 계층 구조
+   */
   pages: NotionPageHierarchy;
+  /**
+   * 노션 페이지 목록
+   */
   notionPageList: NotionPage[];
+  /**
+   * 선택된 페이지 목록
+   */
   selectedPages: NotionPage[];
+  /**
+   * 선택된 부모 페이지
+   */
   selectedParentPage: NotionPage;
 };
 

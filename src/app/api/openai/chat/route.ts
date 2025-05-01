@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { AIResponse } from '@/types/openai.types';
+import { AIResponse } from '@/lib/types/openai.types';
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 

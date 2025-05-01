@@ -2,10 +2,9 @@
 
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import useNotionIntegrationStatus from '@/hooks/notion/useNotionIntegrationStatus';
-import { cn } from '@/lib/utils';
-import React from 'react';
+import { cn } from '@/lib/utils/shadcn.utils';
 
-const IntegrationStatus: React.FC = () => {
+export default function IntegrationStatus() {
   const { isNotionIntegrated, isOpenAIIntegrated } =
     useNotionIntegrationStatus();
 
@@ -36,6 +35,4 @@ const IntegrationStatus: React.FC = () => {
       </CardContent>
     </Card>
   );
-};
-
-export default IntegrationStatus;
+}

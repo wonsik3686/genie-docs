@@ -8,23 +8,15 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { OverviewTemplateSchemaType } from '@/constants/formSchemas/OverviewTemplate.schema';
-import OverviewPromptTemplate from '@/constants/promptTemplates/OverviewTemplatePrompt';
-import { useForm } from 'react-hook-form';
-import TemplateFormBase from './TemplateFormBase';
+import { OverviewTemplateSchemaType } from '@/lib/constants/formSchemas/OverviewTemplate.schema';
+import { UseFormReturn } from 'react-hook-form';
 
-function OverviewTemplateForm() {
-  const form = useForm<OverviewTemplateSchemaType>({
-    defaultValues: {
-      projectName: '',
-      goalAndBackground: '',
-      keyFeatures: '',
-      targetUsers: '',
-      additionalPrompt: '',
-    },
-  });
+interface FormFieldsProps {
+  form: UseFormReturn<OverviewTemplateSchemaType>;
+}
 
-  const formFields = (
+export default function FormFields({ form }: FormFieldsProps) {
+  return (
     <>
       <FormField
         control={form.control}
@@ -108,29 +100,4 @@ function OverviewTemplateForm() {
       />
     </>
   );
-
-  const getPromptTemplate = (
-    formValues: OverviewTemplateSchemaType,
-    pagesContent: string
-  ) => {
-    return OverviewPromptTemplate(
-      formValues.projectName,
-      formValues.goalAndBackground,
-      formValues.keyFeatures,
-      formValues.targetUsers,
-      formValues.additionalPrompt,
-      pagesContent
-    );
-  };
-
-  return (
-    <TemplateFormBase
-      form={form}
-      formFields={formFields}
-      getPromptTemplate={getPromptTemplate}
-      templateType="project-overview"
-    />
-  );
 }
-
-export default OverviewTemplateForm;

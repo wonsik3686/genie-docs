@@ -7,7 +7,13 @@ import type { Metadata } from 'next';
 // import './globals.css';
 import '@/styles/output.css';
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
+  metadataBase: new URL('https://genie-docs.vercel.app'),
   title: 'Genie Docs - AI 기반 문서 관리 도구',
   description:
     'AI와 노션을 활용한 스마트한 문서 관리 솔루션. 반복적인 문서 작업은 Genie Docs에게 맡기고 더 중요한 일에 집중하세요.',
@@ -41,17 +47,12 @@ export const metadata: Metadata = {
       },
     ],
   },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-  },
   robots: {
     index: true,
     follow: true,
   },
   icons: {
     icon: [
-      { url: '/favicon.ico' },
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
       { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
     ],

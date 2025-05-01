@@ -1,5 +1,5 @@
 import AIResponseDisplay from '@/components/ai/AIResponseDisplay';
-import OverviewTemplateForm from '@/components/ai/OverviewTemplateForm';
+import OverviewTemplateForm from '@/components/ai/templates/overview';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   },
 };
 
-function OverviewPage() {
+export default function OverviewPage() {
   return (
     <>
       <h1 className="text-2xl font-bold">프로젝트 개요 문서 생성</h1>
@@ -27,5 +27,3 @@ function OverviewPage() {
     </>
   );
 }
-
-export default OverviewPage;
